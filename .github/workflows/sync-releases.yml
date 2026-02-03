@@ -1,0 +1,48 @@
+name: Sync Releases
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest release
+        run: |
+          curl -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/S-IDE-studio/S-IDE/releases/latest \
+            > release.json
+
+      - name: Generate release markdown
+        run: |
+          VERSION=$(jq -r '.tag_name' release.json)
+          NAME=$(jq -r '.name // .tag_name' release.json)
+          BODY=$(jq -r '.body // ""' release.json)
+          PUBLISHED=$(jq -r '.published_at' release.json)
+          HTML_URL=$(jq -r '.html_url' release.json)
+
+          mkdir -p src/content/releases
+
+          cat > "src/content/releases/${VERSION}.md" << EOF
+          ---
+          title: "${NAME}"
+          version: "${VERSION}"
+          tag_name: "${VERSION}"
+          published_at: "${PUBLISHED}"
+          html_url: "${HTML_URL}"
+          ---
+
+          ${BODY}
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/releases/
+          git diff --staged --quiet || git commit -m "chore: sync release ${VERSION}"
+          git push

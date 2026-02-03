@@ -1,0 +1,66 @@
+---
+import Card from '../ui/Card.astro';
+import { translations } from '../../i18n/ui';
+
+const locale = Astro.currentLocale || 'ja';
+const t = translations[locale as keyof typeof translations];
+
+const features = [
+  {
+    title: 'マルチターミナル',
+    description: '複数のターミナルを同時に使用可能。ドラッグで並び替え、各デッキごとに独立したセッション管理。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>',
+  },
+  {
+    title: 'Monaco Editor',
+    description: 'VS Codeと同じエディタエンジン。シンタックスハイライト、IntelliSense、リッチな編集機能を提供。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>',
+  },
+  {
+    title: 'Git統合',
+    description: 'ステータス確認、Diff表示、コミット、プッシュ/プル、ブランチ管理など完全なGitワークフローをサポート。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
+  },
+  {
+    title: 'Context Manager',
+    description: 'ヘルススコア監視、トピックドリフト検出、セッション圧縮で「コンテキストロット」を防止。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>',
+  },
+  {
+    title: 'デッキシステム',
+    description: '固定ルートパスを持つ名前付きワークスペース。複数プロジェクトの効率的な管理を実現。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>',
+  },
+  {
+    title: 'クロスプラットフォーム',
+    description: 'Windows、macOS、Linuxに対応。デスクトップアプリとWeb版のどちらでも利用可能。',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>',
+  },
+];
+---
+
+<section class="py-20 sm:py-32 bg-[#0f172a]">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+        {t.features.title}
+      </h2>
+      <p class="text-[#94a3b8] text-lg max-w-2xl mx-auto">
+        {t.features.subtitle}
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {features.map((feature, index) => (
+        <Card
+          title={feature.title}
+          description={feature.description}
+          icon={feature.icon}
+          class="card-hover"
+        />
+      ))}
+    </div>
+  </div>
+</section>

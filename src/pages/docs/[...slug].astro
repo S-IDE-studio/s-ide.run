@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { translations } from '../../i18n/ui';
+
+export async function getStaticPaths() {
+  const docsEntries = await getCollection('docs');
+  return docsEntries.map((doc) => ({
+    params: { slug: doc.slug },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const docsEntries = await getCollection('docs');
+const docs = docsEntries.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+const currentIndex = docs.findIndex(d => d.slug === doc.slug);
+const locale = Astro.currentLocale || 'ja';
+const t = translations[locale as keyof typeof translations];
+---
+
+<Layout title={`${doc.data.title} - S-IDE`}>
+  <section class="py-20 sm:py-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8">
+        <a href="/docs" class="text-blue-400 hover:underline">← ドキュメント一覧</a>
+      </nav>
+
+      <!-- Doc Content -->
+      <article class="prose prose-invert prose-blue max-w-none">
+        <h1 class="text-4xl font-bold mb-4">{doc.data.title}</h1>
+        {doc.data.description && (
+          <p class="text-xl text-[#94a3b8] mb-8">{doc.data.description}</p>
+        )}
+        <div set:html={doc.render()} />
+      </article>
+
+      <!-- Navigation -->
+      <div class="mt-16 pt-8 border-t border-white/10 flex justify-between">
+        {currentIndex > 0 && (
+          <a
+            href={`/docs/${docs[currentIndex - 1].slug}`}
+            class="text-blue-400 hover:underline"
+          >
+            ← {docs[currentIndex - 1].data.title}
+          </a>
+        )}
+        {currentIndex < docs.length - 1 && (
+          <a
+            href={`/docs/${docs[currentIndex + 1].slug}`}
+            class="text-blue-400 hover:underline ml-auto"
+          >
+            {docs[currentIndex + 1].data.title} →
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+</Layout>

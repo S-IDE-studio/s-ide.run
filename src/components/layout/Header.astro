@@ -1,0 +1,103 @@
+---
+const { translations } = await import('../../i18n/ui');
+
+const locale = Astro.currentLocale || 'ja';
+const t = translations[locale as keyof typeof translations];
+
+const navItems = [
+  { href: '/', label: t.nav.home },
+  { href: '/features', label: t.nav.features },
+  { href: '/docs', label: t.nav.docs },
+  { href: '/download', label: t.nav.download },
+];
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0f172a]/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2">
+      <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="20" height="20" rx="4" fill="url(#logo-gradient)" />
+        <path d="M7 8h10M7 12h7M7 16h4" stroke="white" stroke-width="2" stroke-linecap="round" />
+        <defs>
+          <linearGradient id="logo-gradient" x1="2" y1="2" x2="22" y2="22">
+            <stop stop-color="#3b82f6" />
+            <stop offset="1" stop-color="#8b5cf6" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="text-xl font-bold">S-IDE</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              "text-sm font-medium transition-colors hover:text-blue-400",
+              Astro.url.pathname === item.href ? "text-blue-400" : "text-[#94a3b8]",
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Language Switcher -->
+    <div class="flex items-center gap-4">
+      <div class="hidden sm:flex items-center gap-2">
+        <a
+          href="/"
+          class:list={[
+            "text-xs font-medium px-2 py-1 rounded transition-colors",
+            locale === 'ja' ? "bg-blue-500/20 text-blue-400" : "text-[#94a3b8] hover:text-white",
+          ]}
+        >
+          JA
+        </a>
+        <a
+          href="/en"
+          class:list={[
+            "text-xs font-medium px-2 py-1 rounded transition-colors",
+            locale === 'en' ? "bg-blue-500/20 text-blue-400" : "text-[#94a3b8] hover:text-white",
+          ]}
+        >
+          EN
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        class="md:hidden p-2 text-[#94a3b8] hover:text-white"
+        aria-label="Menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div class="md:hidden border-t border-white/10 bg-[#0f172a]">
+    <ul class="px-4 py-4 space-y-3">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list=[
+              "block text-sm font-medium transition-colors",
+              Astro.url.pathname === item.href ? "text-blue-400" : "text-[#94a3b8]",
+            ]
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+  gradient?: boolean;
+  class?: string;
+}
+
+const { title, description, icon, gradient = false, class: className = '' } = Astro.props;
+
+const baseClasses = 'rounded-xl p-6 border transition-all duration-200';
+const variantClasses = gradient
+  ? 'border-transparent bg-gradient-to-br from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20'
+  : 'border-white/10 bg-[#1e293b] hover:border-blue-500/30';
+
+const classes = `${baseClasses} ${variantClasses} ${className}`;
+---
+
+<div class={classes}>
+  {icon && (
+    <div class="mb-4 text-blue-400" set:html={icon} />
+  )}
+  <h3 class="text-lg font-semibold mb-2">{title}</h3>
+  <p class="text-[#94a3b8] text-sm leading-relaxed">{description}</p>
+</div>
