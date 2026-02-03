@@ -1,0 +1,178 @@
+/* ========================================
+   TYPOGRAPHY SYSTEM
+   Distinctive font pair for refined minimalism
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+/* Font Variables */
+:root {
+  /* Display font - elegant serif with character */
+  --font-display: 'Cormorant Garamond', 'Adobe Garamond Pro', 'Times New Roman', serif;
+
+  /* Body font - geometric but refined */
+  --font-body: 'DM Sans', 'Helvetica Neue', 'SF Pro Display', -apple-system, sans-serif;
+
+  /* Mono font - for code */
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* Type Scale - modular scale for harmony */
+:root {
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+  --text-7xl: 4.5rem;    /* 72px */
+}
+
+/* Letter spacing for refinement */
+:root {
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+}
+
+/* Line height for readability */
+:root {
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  --leading-loose: 2;
+}
+
+/* Base typography */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Display typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: clamp(var(--text-5xl), 8vw, var(--text-7xl));
+  font-weight: 300;
+}
+
+h2 {
+  font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+  font-weight: 300;
+}
+
+h3 {
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  font-weight: 400;
+}
+
+/* Prose content */
+.prose {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+.prose h1 {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  font-weight: 400;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  font-weight: 400;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  font-size: var(--text-lg);
+}
+
+/* Code blocks */
+code, pre {
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+/* Gradient text enhancement */
+.gradient-text {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg,
+    hsl(220, 90%, 65%) 0%,
+    hsl(270, 85%, 60%) 50%,
+    hsl(300, 80%, 55%) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+}
+
+/* Animated gradient text */
+.gradient-text.animated {
+  animation: gradient-flow 8s ease infinite;
+}
+
+@keyframes gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Text reveal animation */
+.text-reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes reveal-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered children */
+.text-reveal > * {
+  opacity: 0;
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.text-reveal > *:nth-child(1) { animation-delay: 0.1s; }
+.text-reveal > *:nth-child(2) { animation-delay: 0.2s; }
+.text-reveal > *:nth-child(3) { animation-delay: 0.3s; }
+.text-reveal > *:nth-child(4) { animation-delay: 0.4s; }
+.text-reveal > *:nth-child(5) { animation-delay: 0.5s; }
