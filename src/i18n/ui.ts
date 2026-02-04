@@ -7,10 +7,10 @@ export const translations = {
       download: 'ダウンロード',
     },
     hero: {
-      title: 'AIエージェントのための',
-      gradient: '次世代IDE',
-      subtitle: 'S-IDEはAIワークフローに最適化されたインテリジェントな開発環境です',
-      cta: '今すぐダウンロード',
+      title: 'すべてのAIエージェントを',
+      gradient: 'この一箇所で司る',
+      subtitle: 'ローカルサーバーがホストする環境へ、あらゆるデバイスからアクセス',
+      cta: 'ダウンロード',
     },
     features: {
       title: '主要機能',
@@ -63,7 +63,17 @@ export const translations = {
       size: 'Size',
     },
   },
-};
+} as const;
 
-export type TranslationKey = keyof typeof translations.ja;
 export type Locale = keyof typeof translations;
+
+// Type guard for locale validation
+export function isValidLocale(locale: string | null | undefined): locale is Locale {
+  return locale != null && locale in translations;
+}
+
+// Get translations with type safety
+export function getTranslations(locale: string | null | undefined) {
+  const validLocale = isValidLocale(locale) ? locale : 'ja';
+  return translations[validLocale];
+}

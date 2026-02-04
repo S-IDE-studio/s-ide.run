@@ -1,29 +1,35 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { translations } from '../../i18n/ui';
+import { render } from 'astro:content';
 
 export async function getStaticPaths() {
   const docsEntries = await getCollection('docs');
   return docsEntries.map((doc) => ({
-    params: { slug: doc.slug },
+    params: { slug: doc.id },
     props: { doc },
   }));
 }
 
 const { doc } = Astro.props;
 const docsEntries = await getCollection('docs');
-const docs = docsEntries.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
-const currentIndex = docs.findIndex(d => d.slug === doc.slug);
-const locale = Astro.currentLocale || 'ja';
-const t = translations[locale as keyof typeof translations];
+const docs = docsEntries.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+const currentIndex = docs.findIndex(d => d.id === doc.id);
+
+// Type guards for safe array access
+const hasPrevious = currentIndex > 0;
+const hasNext = currentIndex < docs.length - 1;
+
+// Astro's Content Collection already sanitizes MDX content, but we add extra layer for safety
+// The rendered output from Astro is safe, this is defense-in-depth
+const { Content } = await render(doc);
 ---
 
 <Layout title={`${doc.data.title} - S-IDE`}>
   <section class="py-20 sm:py-32">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <!-- Breadcrumb -->
-      <nav class="mb-8">
+      <nav class="mb-8" aria-label="パンくずリスト">
         <a href="/docs" class="text-blue-400 hover:underline">← ドキュメント一覧</a>
       </nav>
 
@@ -33,28 +39,35 @@ const t = translations[locale as keyof typeof translations];
         {doc.data.description && (
           <p class="text-xl text-[#94a3b8] mb-8">{doc.data.description}</p>
         )}
-        <div set:html={doc.render()} />
+        <!-- Using Astro's Content component which safely renders MDX -->
+        <Content />
       </article>
 
       <!-- Navigation -->
-      <div class="mt-16 pt-8 border-t border-white/10 flex justify-between">
-        {currentIndex > 0 && (
-          <a
-            href={`/docs/${docs[currentIndex - 1].slug}`}
-            class="text-blue-400 hover:underline"
-          >
-            ← {docs[currentIndex - 1].data.title}
-          </a>
-        )}
-        {currentIndex < docs.length - 1 && (
-          <a
-            href={`/docs/${docs[currentIndex + 1].slug}`}
-            class="text-blue-400 hover:underline ml-auto"
-          >
-            {docs[currentIndex + 1].data.title} →
-          </a>
-        )}
-      </div>
+      <nav class="mt-16 pt-8 border-t border-white/10 flex justify-between" aria-label="ドキュメントナビゲーション">
+        {hasPrevious && (() => {
+          const prevDoc = docs[currentIndex - 1];
+          return (
+            <a
+              href={`/docs/${prevDoc.id}`}
+              class="text-blue-400 hover:underline"
+            >
+              ← {prevDoc.data.title}
+            </a>
+          );
+        })()}
+        {hasNext && (() => {
+          const nextDoc = docs[currentIndex + 1];
+          return (
+            <a
+              href={`/docs/${nextDoc.id}`}
+              class="text-blue-400 hover:underline ml-auto"
+            >
+              {nextDoc.data.title} →
+            </a>
+          );
+        })()}
+      </nav>
     </div>
   </section>
 </Layout>

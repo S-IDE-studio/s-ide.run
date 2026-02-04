@@ -1,0 +1,11 @@
+# S-IDE Website Robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://s-ide.run/sitemap.xml
+
+# Disallow certain paths if needed
+# Disallow: /api/
+# Disallow: /admin/

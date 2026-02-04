@@ -9,8 +9,8 @@
  *   DOCS_REPO - Docs repository (default: S-IDE-studio/docs)
  */
 
-import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,12 +20,6 @@ interface GitHubFile {
   path: string;
   type: string;
   download_url: string | null;
-}
-
-interface GitHubTreeItem {
-  path: string;
-  type: string;
-  url: string;
 }
 
 const CONFIG = {
@@ -58,9 +52,7 @@ async function fetchDocsList(): Promise<string[]> {
   }
 
   const files: GitHubFile[] = await response.json();
-  return files
-    .filter((f) => f.type === 'file' && f.name.endsWith('.md'))
-    .map((f) => f.path);
+  return files.filter((f) => f.type === 'file' && f.name.endsWith('.md')).map((f) => f.path);
 }
 
 /**
@@ -88,9 +80,7 @@ async function clearOutputDir(): Promise<void> {
 
   try {
     const files = await fs.readdir(CONFIG.outputDir);
-    await Promise.all(
-      files.map((file) => fs.unlink(path.join(CONFIG.outputDir, file)))
-    );
+    await Promise.all(files.map((file: string) => fs.unlink(path.join(CONFIG.outputDir, file))));
   } catch {
     // Directory might not exist yet
   }

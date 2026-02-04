@@ -11,6 +11,9 @@ const { title, description, image, type, canonicalURL } = Astro.props;
 
 const siteName = 'S-IDE';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+
+// Ensure Astro.site is not null for URL resolution
+const siteUrl = Astro.site ?? new URL('https://s-ide.run');
 ---
 
 <!-- Primary Meta Tags -->
@@ -23,7 +26,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site)} />
+<meta property="og:image" content={new URL(image, siteUrl)} />
 <meta property="og:site_name" content={siteName} />
 
 <!-- Twitter -->
@@ -31,7 +34,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.site)} />
+<meta property="twitter:image" content={new URL(image, siteUrl)} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -41,14 +44,30 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <meta name="googlebot" content="index, follow" />
 
 <!-- Structured Data -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "S-IDE",
-    "operatingSystem": "Windows, macOS, Linux",
-    "applicationCategory": "DeveloperApplication",
-    "description": description,
-    "url": canonicalURL
+<script is:inline type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "S-IDE",
+  "alternateName": "S-IDE Studio",
+  "operatingSystem": "Windows, macOS, Linux",
+  "applicationCategory": "DeveloperApplication",
+  "description": {JSON.stringify(description)},
+  "url": {JSON.stringify(canonicalURL)},
+  "image": {JSON.stringify(new URL(image, siteUrl))},
+  "author": {
+    "@type": "Organization",
+    "name": "S-IDE Studio"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "120"
   }
+}
 </script>

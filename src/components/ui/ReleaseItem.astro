@@ -1,0 +1,164 @@
+---
+/**
+ * ReleaseItem component for release notes
+ * Displays individual release with version, date, description, and optional screenshot
+ */
+interface Props {
+  version: string;
+  date: string;
+  title: string;
+  description: string;
+  features?: string[];
+  topPosition?: string;
+  screenshotSize?: 'large' | 'small' | 'none';
+  showScreenshotLeft?: boolean;
+}
+
+const {
+  version,
+  date,
+  title,
+  description,
+  features = [],
+  topPosition,
+  screenshotSize = 'small',
+  showScreenshotLeft = false,
+} = Astro.props;
+
+const hasScreenshot = screenshotSize !== 'none';
+const positionStyle = topPosition ? `top: ${topPosition};` : '';
+const marginBottom = screenshotSize === 'large' ? '16px' : '0';
+---
+
+<article class="release-section" style={positionStyle}>
+  <header class="release-header">
+    <h2 class="release-version">{version}</h2>
+    <span class="release-date">{date}</span>
+  </header>
+
+  {screenshotSize === 'large' && (
+    <div class="screenshot-placeholder screenshot-large" style={`margin-bottom: ${marginBottom};`} role="img" aria-label={`${version} スクリーンショット`}>
+      <span>Screenshot</span>
+    </div>
+  )}
+
+  <h3 class="release-title">{title}</h3>
+  <p class="release-description">
+    {description}
+  </p>
+
+  {features.length > 0 && (
+    <ul class="release-features">
+      {features.map((feature) => <li>{feature}</li>)}
+    </ul>
+  )}
+
+  {(screenshotSize === 'small' || screenshotSize === 'none') && hasScreenshot && (
+    <div class="release-content">
+      {showScreenshotLeft && (
+        <div class="screenshot-placeholder screenshot-small" role="img" aria-label={`${version} スクリーンショット`}>
+          <span>Screenshot</span>
+        </div>
+      )}
+      {!showScreenshotLeft && (
+        <div class="screenshot-placeholder screenshot-small" role="img" aria-label={`${version} スクリーンショット`}>
+          <span>Screenshot</span>
+        </div>
+      )}
+    </div>
+  )}
+</article>
+
+<style>
+  .release-section {
+    position: absolute;
+    left: 0;
+    width: var(--grid-6-col);
+  }
+
+  .release-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .release-version {
+    color: var(--color-text-primary);
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .release-date {
+    color: var(--color-text-muted);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .screenshot-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .screenshot-placeholder span {
+    color: var(--color-text-muted);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .screenshot-large {
+    width: var(--grid-6-col);
+    height: 400px;
+  }
+
+  .screenshot-small {
+    width: var(--grid-3-col);
+    height: 320px;
+  }
+
+  .release-title {
+    color: var(--color-text-primary);
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .release-description {
+    color: var(--color-text-secondary);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .release-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .release-text {
+    width: var(--grid-3-col);
+  }
+
+  .release-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .release-features li {
+    color: var(--color-text-secondary);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+  }
+</style>

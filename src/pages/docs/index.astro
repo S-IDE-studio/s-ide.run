@@ -1,31 +1,69 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { translations } from '../../i18n/ui';
 
-const locale = Astro.currentLocale || 'ja';
-const t = translations[locale as keyof typeof translations];
-
-// Get all docs entries
 const docsEntries = await getCollection('docs');
-const docs = docsEntries.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+const docs = docsEntries.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
 ---
 
 <Layout title="ドキュメント - S-IDE">
-  <section class="py-20 sm:py-32">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-8">ドキュメント</h1>
-      <div class="space-y-4">
-        {docs.map((doc) => (
-          <a
-            href={`/docs/${doc.slug}`}
-            class="block p-6 bg-[#1e293b] border border-white/10 rounded-xl hover:border-blue-500/30 transition-colors"
-          >
-            <h2 class="text-xl font-semibold mb-2">{doc.data.title}</h2>
-            <p class="text-[#94a3b8]">{doc.data.description}</p>
-          </a>
-        ))}
-      </div>
+  <section class="relative bg-black pb-32">
+    <!-- Grid Container -->
+    <div class="relative mx-auto" style="width: 916px;">
+      <!-- Sidebar - Column 1-2 -->
+      <aside class="absolute" style="left: 0; top: 120px; width: 299px;">
+        <nav class="flex flex-col" style="gap: 16px;" aria-label="ドキュメントサイドバー">
+          <h2 style="color: #ffffff; font-family: Inter; font-size: 24px; font-weight: 700;">
+            ドキュメント
+          </h2>
+          <ul style="display: flex; flex-direction: column; gap: 16px;" role="list">
+            {docs.map((doc) => (
+              <li>
+                <a
+                  href={`/docs/${doc.id}`}
+                  style="font-size: 14px; color: #bbbbbb; font-family: Inter; font-weight: normal;"
+                  class="hover:text-white transition-colors"
+                >
+                  {doc.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Content - Column 3-6 (left: 308px = 145*2 + 9*2) -->
+      <main class="absolute" style="left: 308px; top: 120px; width: 608px;">
+        <div class="flex flex-col" style="gap: 24px;">
+          <!-- Page Title -->
+          <h1 style="color: #ffffff; font-family: Inter; font-size: 48px; font-weight: 700;">
+            はじめに
+          </h1>
+
+          <!-- Description -->
+          <p style="color: #bbbbbb; font-family: Inter; font-size: 16px; font-weight: normal; line-height: 1.6;">
+            S-IDEは、すべてのAIエージェントを統合し、シームレスな創造体験を提供するローカル実行環境です。
+          </p>
+
+          <!-- Document Cards -->
+          <div class="flex flex-col" style="gap: 16px; margin-top: 32px;">
+            {docs.map((doc) => (
+              <a
+                href={`/docs/${doc.id}`}
+                class="block p-6 transition-colors hover:bg-[#222222]"
+                style="background-color: #1a1a1a; border: 1px solid #333333;"
+              >
+                <h2 style="color: #ffffff; font-family: Inter; font-size: 20px; font-weight: 600; margin-bottom: 8px;">
+                  {doc.data.title}
+                </h2>
+                <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal;">
+                  {doc.data.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   </section>
 </Layout>

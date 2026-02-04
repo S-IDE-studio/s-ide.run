@@ -1,38 +1,29 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Docs collection
+// Docs collection with enhanced validation
 const docs = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docs' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    order: z.number().optional(),
-  }),
+  schema: z
+    .object({
+      title: z
+        .string()
+        .min(1, 'Title is required')
+        .max(200, 'Title must be less than 200 characters')
+        .refine((val) => !val.includes('<'), { message: 'Title must not contain HTML' }),
+      description: z
+        .string()
+        .max(500, 'Description must be less than 500 characters')
+        .refine((val) => !val.includes('<'), { message: 'Description must not contain HTML' })
+        .optional(),
+      order: z
+        .number()
+        .int('Order must be an integer')
+        .min(0, 'Order must be non-negative')
+        .max(9999, 'Order must be less than 10000')
+        .optional(),
+    })
+    .strict(), // Prevent additional properties
 });
 
-// Tutorials collection
-const tutorials = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tutorials' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
-    duration: z.string(),
-    publishedAt: z.coerce.date(),
-  }),
-});
-
-// Releases collection (synced from GitHub)
-const releases = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/releases' }),
-  schema: z.object({
-    version: z.string(),
-    tag_name: z.string(),
-    published_at: z.coerce.date(),
-    body: z.string().optional(),
-    html_url: z.string().optional(),
-  }),
-});
-
-export const collections = { docs, tutorials, releases };
+export const collections = { docs };

@@ -1,0 +1,79 @@
+---
+/**
+ * PlatformCard component for download page
+ * Displays platform download information with icon, title, and download button
+ */
+interface Props {
+  name: string;
+  shortName?: string;
+  description: string;
+  downloadUrl: string;
+  fileSize?: string;
+  buttonLabel?: string;
+  isAvailable?: boolean;
+  isComingSoon?: boolean;
+  icon?: string;
+}
+
+const {
+  name,
+  shortName,
+  description,
+  downloadUrl,
+  fileSize,
+  buttonLabel = 'Download',
+  isAvailable = true,
+  isComingSoon = false,
+  icon,
+} = Astro.props;
+
+const computedShortName = shortName ?? name;
+const iconDisplay = icon ?? computedShortName.toUpperCase();
+const sizeDisplay = fileSize ? `(${fileSize})` : '';
+const containerStyle = isComingSoon
+  ? 'width: 453px; background-color: #1a1a1a; border: 1px solid #333333; padding: 24px; opacity: 0.5;'
+  : 'width: 453px; background-color: #1a1a1a; border: 1px solid #333333; padding: 24px;';
+const containerClass = isComingSoon
+  ? 'flex flex-col items-center justify-center text-center'
+  : 'flex flex-col';
+const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
+---
+
+<article style={containerStyle}>
+  <div class={containerClass} style={innerDivStyle}>
+    {isComingSoon ? (
+      <>
+        <div style="font-size: 32px;" aria-hidden="true">{iconDisplay}</div>
+        <div>
+          <h2 style="color: #ffffff; font-family: Inter; font-size: 20px; font-weight: 600;">{name}</h2>
+          <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal;">Coming Soon</p>
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="flex items-center" style="gap: 12px;">
+          <div class="flex items-center justify-center" style="width: 48px; height: 48px; background-color: #ffffff; border-radius: var(--radius-md);" aria-hidden="true">
+            <span style="color: #000000; font-family: Inter; font-size: 12px; font-weight: 700;">{computedShortName.toUpperCase()}</span>
+          </div>
+          <div>
+            <h2 style="color: #ffffff; font-family: Inter; font-size: 20px; font-weight: 600;">{name}</h2>
+            <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal;">{description}</p>
+          </div>
+        </div>
+        <div class="flex flex-col" style="gap: 8px;">
+          <a
+            href={downloadUrl}
+            class="flex items-center justify-center transition-opacity"
+            class:opacity-50={!isAvailable}
+            style="height: 44px; background-color: #ffffff; border-radius: var(--radius-pill);"
+            aria-label={`${name}をダウンロード`}
+          >
+            <span style="color: #000000; font-family: Inter; font-size: 14px; font-weight: 600;">
+              {buttonLabel} {sizeDisplay}
+            </span>
+          </a>
+        </div>
+      </>
+    )}
+  </div>
+</article>

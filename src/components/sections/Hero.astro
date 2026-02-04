@@ -1,97 +1,57 @@
 ---
-import Button from '../ui/Button.astro';
-import GradientText from '../ui/GradientText.astro';
-import { translations } from '../../i18n/ui';
+import { getTranslations } from '../../i18n/ui';
 
-const locale = Astro.currentLocale || 'ja';
-const t = translations[locale as keyof typeof translations];
+const t = getTranslations(Astro.currentLocale);
 ---
 
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <!-- Hero section with refined animations -->
-  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 text-center">
-    <!-- Main title with reveal animation -->
-    <div class="text-reveal">
-      <p class="text-lg sm:text-xl text-[#a0a0b0] mb-4 tracking-wide font-light">
-        {t.hero.title}
-      </p>
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-light mb-6">
-        <GradientText as="span" class="gradient-text-animated inline-block">
-          {t.hero.gradient}
-        </GradientText>
-      </h1>
+<section class="relative overflow-hidden" style="height: 370px;">
+  {/* Grid Container */}
+  <div class="relative z-10 mx-auto" style="width: 916px; height: 370px;">
+    {/* Badge - Column 1 */}
+    <div class="absolute inline-flex items-center bg-white rounded-full" style="left: 0; top: 40px; gap: 8px; padding: 8px 16px; border-radius: var(--radius-pill);" aria-hidden="true">
+      <div class="rounded-full" style="width: 8px; height: 8px; background-color: #000000;"></div>
+      <span style="color: #000000; font-family: Inter; font-size: 12px; font-weight: 600;">
+        v1.0.0 現在公開中
+      </span>
     </div>
 
-    <!-- Subtitle with delay -->
-    <p class="text-xl sm:text-2xl text-[#a0a0b0] max-w-2xl mx-auto mb-12 text-reveal delay-200 leading-relaxed">
+    {/* Title - Column 1-6 */}
+    <h1 class="absolute text-white text-left" style="left: 0; width: 916px; top: 90px; font-family: Inter; font-size: 64px; font-weight: 700; line-height: 1.1;">
+      {t.hero.title}
+      <br />
+      {t.hero.gradient}
+    </h1>
+
+    {/* Subtitle - Column 1-6 */}
+    <p class="absolute text-left" style="left: 0; width: 916px; top: 240px; color: #bbbbbb; font-family: Inter; font-size: 18px; font-weight: normal; line-height: 1.5;">
       {t.hero.subtitle}
     </p>
 
-    <!-- CTA Buttons with delay -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 text-reveal delay-300">
-      <Button
+    {/* CTA Buttons - Column 1-6 */}
+    <div class="absolute flex items-center" style="left: 0; width: 916px; top: 300px; gap: 9px;">
+      {/* Download Button */}
+      <a
         href="/download"
-        variant="gradient"
-        size="lg"
-        class="group relative overflow-hidden"
+        class="flex items-center justify-center rounded-full"
+        style="width: 299px; height: 44px; background-color: #ffffff;"
+        aria-label="ダウンロードページへ移動"
       >
-        <span class="relative z-10 flex items-center">
+        <span style="color: #000000; font-family: Inter; font-size: 14px; font-weight: 600;">
           {t.hero.cta}
-          <svg class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4" />
-          </svg>
         </span>
-        <span class="absolute inset-0 bg-gradient-to-r from-[#f97316] to-[#ef4444] opacity-0 group-hover:opacity-100 transition-opacity"></span>
-      </Button>
+      </a>
 
-      <Button
+      {/* Docs Button */}
+      <a
         href="/docs"
-        variant="secondary"
-        size="lg"
-        class="border-glow group"
+        class="flex items-center justify-center rounded-full"
+        style="width: 299px; height: 44px; background-color: #333333;"
+        aria-label="ドキュメントページへ移動"
       >
-        <span class="relative z-10 flex items-center">
-          ドキュメント
-          <svg class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
+        <span style="color: #ffffff; font-family: Inter; font-size: 14px; font-weight: 600;">
+          {t.nav.docs}
         </span>
-      </Button>
-    </div>
-
-    <!-- Version badge with subtle animation -->
-    <div class="mt-16 text-reveal delay-400">
-      <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-glow">
-        <div class="w-2 h-2 rounded-full bg-[var(--color-primary-start)] animate-pulse"></div>
-        <span class="text-sm font-medium text-[#a0a0b0]">
-          v1.0.0 現在公開中
-        </span>
-      </div>
+      </a>
     </div>
   </div>
-
-  <!-- Decorative grid pattern -->
-  <div class="absolute inset-0 z-0 opacity-20">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:6rem_6rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
-  </div>
-
-  <!-- Animated corner accents -->
-  <div class="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-[var(--color-primary-start)]/10 to-transparent blur-3xl animate-pulse"></div>
-  <div class="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-[var(--color-primary-end)]/10 to-transparent blur-3xl animate-pulse" style="animation-delay: 1s"></div>
 </section>
-
-<style>
-  /* Smooth reveal animation */
-  .text-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes reveal-up {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>
