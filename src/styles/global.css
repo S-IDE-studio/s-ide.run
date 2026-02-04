@@ -444,9 +444,8 @@ button:focus-visible {
 }
 
 /* ========================================
-   GRID GUIDE (Development Only)
+   GRID GUIDE
    ======================================== */
-/* Uncomment to enable grid overlay during development
 body::before {
   content: "";
   position: fixed;
@@ -497,7 +496,6 @@ body::before {
     1px 100%,
     1px 100%;
 }
-*/
 /* ========================================
    FEATURES PAGE STYLES
    ======================================== */
