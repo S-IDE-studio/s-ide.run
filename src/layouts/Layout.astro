@@ -65,6 +65,15 @@ const scrollRevealScript = `
     <script is:inline define:fn={scrollRevealScript}>
       document.addEventListener('astro:page-load', fn);
     </script>
+
+    <!-- Google Analytics 4 -->
+    <script is:inline src="https://www.googletagmanager.com/gtag/js?id=G-J33W7L86EY"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-J33W7L86EY');
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Atmospheric background -->
