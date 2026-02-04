@@ -4,15 +4,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "tsx scripts/fetch-docs.ts && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "fetch:docs": "tsx scripts/fetch-docs.ts"
   },
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }
