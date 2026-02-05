@@ -47,11 +47,12 @@ const features: Feature[] = [
     description: 'Windows、macOS、Linuxに対応。デスクトップアプリとWeb版のどちらでも利用可能。',
     icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>',
   },
+];
 ---
 
 <section class="relative bg-[#0f172a]">
   {/* Grid Container */}
-  <div class="relative z-10 mx-auto flex flex-col features-container">
+  <div class="relative z-10 container-grid features-container">
     {/* Section Header */}
     <div class="text-center features-header">
       <h2 class="font-bold mb-4 features-title">
@@ -77,10 +78,9 @@ const features: Feature[] = [
 
   {/* Responsive styles */}
   <style scoped>
-    /* Features container responsive max-width */
+    /* Features container spacing */
     .features-container {
-      max-width: 916px;
-      padding: 5rem 1rem;
+      padding: 5rem 0;
       gap: 4rem;
     }
 
@@ -109,7 +109,7 @@ const features: Feature[] = [
     @media (max-width: 479px) {
       .features-container {
         max-width: 100%;
-        padding: 3rem 1rem;
+        padding: 3rem 18px;
         gap: 3rem;
       }
 
@@ -130,7 +130,7 @@ const features: Feature[] = [
     /* Small (480-616px) - 2 columns */
     @media (min-width: 480px) and (max-width: 616px) {
       .features-container {
-        max-width: 299px;
+        max-width: var(--grid-2-col);
         padding: 3.5rem 0;
         gap: 3.5rem;
       }
@@ -152,8 +152,8 @@ const features: Feature[] = [
     /* Medium (617-915px) - 4 columns */
     @media (min-width: 617px) and (max-width: 915px) {
       .features-container {
-        max-width: 617px;
-        padding: 4rem 1rem;
+        max-width: var(--grid-4-col);
+        padding: 4rem 0;
         gap: 3.5rem;
       }
 
@@ -174,8 +174,7 @@ const features: Feature[] = [
     /* Large (916px+) - 6 columns (3 cards per row, 2 rows) */
     @media (min-width: 916px) {
       .features-container {
-        max-width: 916px;
-        padding: 5rem 1rem;
+        padding: 5rem 0;
         gap: 4rem;
       }
 

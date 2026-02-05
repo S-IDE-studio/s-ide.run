@@ -6,9 +6,9 @@ const t = getTranslations(Astro.currentLocale);
 
 <section class="relative overflow-hidden min-h-[370px]">
   {/* Grid Container */}
-  <div class="relative z-10 mx-auto flex flex-col px-4 py-10 gap-6 hero-container">
+  <div class="relative z-10 container-grid py-10 gap-6">
     {/* Badge */}
-    <div class="inline-flex items-center self-start bg-white rounded-full px-4 py-2 gap-2" aria-hidden="true">
+    <div class="inline-flex items-center self-start bg-white rounded-full px-[9px] py-2 gap-2" aria-hidden="true">
       <div class="rounded-full w-2 h-2 bg-black"></div>
       <span class="text-black text-xs font-semibold leading-tight">
         v1.0.0 現在公開中
@@ -34,7 +34,7 @@ const t = getTranslations(Astro.currentLocale);
       {/* Download Button */}
       <a
         href="/download"
-        class="flex items-center justify-center rounded-full bg-white h-11 min-w-[299px]"
+        class="flex items-center justify-center rounded-full bg-white h-11 cta-button-primary grid-2-col"
         aria-label="ダウンロードページへ移動"
       >
         <span class="text-black text-sm font-semibold">
@@ -45,7 +45,7 @@ const t = getTranslations(Astro.currentLocale);
       {/* Docs Button */}
       <a
         href="/docs"
-        class="flex items-center justify-center rounded-full bg-[#333333] h-11 min-w-[299px]"
+        class="flex items-center justify-center rounded-full bg-[#333333] h-11 cta-button-secondary grid-2-col"
         aria-label="ドキュメントページへ移動"
       >
         <span class="text-white text-sm font-semibold">
@@ -57,24 +57,26 @@ const t = getTranslations(Astro.currentLocale);
 
   {/* Responsive styles */}
   <style scoped>
-    /* Hero container responsive max-width */
-    .hero-container {
-      max-width: 916px;
-    }
-
     /* CTA buttons responsive layout */
     .cta-buttons {
       flex-direction: row;
+      gap: 9px;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      width: var(--grid-2-col); /* 2 columns from global grid system */
     }
 
     /* Mobile (< 480px) */
     @media (max-width: 479px) {
-      .hero-container {
-        max-width: 100%;
-      }
       .cta-buttons {
         flex-direction: column;
         align-items: stretch;
+      }
+      .cta-button-primary,
+      .cta-button-secondary {
+        width: 100%;
       }
       section {
         min-height: 320px;
@@ -89,8 +91,13 @@ const t = getTranslations(Astro.currentLocale);
 
     /* Small (480-616px) - 2 columns */
     @media (min-width: 480px) and (max-width: 616px) {
-      .hero-container {
-        max-width: 299px;
+      .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cta-button-primary,
+      .cta-button-secondary {
+        width: 100%;
       }
       section {
         min-height: 340px;
@@ -105,8 +112,12 @@ const t = getTranslations(Astro.currentLocale);
 
     /* Medium (617-915px) - 4 columns */
     @media (min-width: 617px) and (max-width: 915px) {
-      .hero-container {
-        max-width: 617px;
+      .cta-buttons {
+        /* 4カラム分の実グリッド幅 (= 4列 + 3ギャップ) に合わせる */
+        width: calc(4 * var(--grid-column-width) + 3 * var(--grid-gap));
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: space-between;
       }
       section {
         min-height: 360px;
@@ -121,9 +132,6 @@ const t = getTranslations(Astro.currentLocale);
 
     /* Large (916px+) - 6 columns */
     @media (min-width: 916px) {
-      .hero-container {
-        max-width: 916px;
-      }
       section {
         min-height: 370px;
       }

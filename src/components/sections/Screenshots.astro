@@ -10,7 +10,7 @@
     </p>
 
     {/* Pattern 1: Text Left + Image Right */}
-    <article class="flex items-center gap-2 screenshot-row">
+    <article class="flex items-center screenshot-row">
       {/* Text */}
       <div class="screenshot-text">
         <h2 class="text-white font-bold mb-4">エージェント管理</h2>
@@ -25,7 +25,7 @@
     </article>
 
     {/* Pattern 2: Image Left + Text Right */}
-    <article class="flex items-center gap-2 screenshot-row">
+    <article class="flex items-center screenshot-row">
       {/* Image */}
       <div class="flex items-center justify-center screenshot-placeholder" role="img" aria-label="ローカル実行画面のスクリーンショット">
         <span class="text-[#666666] text-xs font-semibold">Screenshot</span>
@@ -40,7 +40,7 @@
     </article>
 
     {/* Pattern 3: Full Width Image + Text Below */}
-    <article class="flex flex-col gap-4 screenshot-full">
+    <article class="flex flex-col screenshot-full">
       {/* Image */}
       <div class="flex items-center justify-center screenshot-placeholder-full" role="img" aria-label="マルチデバイス対応画面のスクリーンショット">
         <span class="text-[#666666] text-xs font-semibold">Screenshot</span>
@@ -60,8 +60,8 @@
     /* Screenshots container responsive max-width */
     .screenshots-container {
       max-width: 916px;
-      padding: 3.75rem 1rem;
-      gap: 1.5rem;
+      padding: 3.75rem 0;
+      gap: 18px;
     }
 
     /* Label responsive styles */
@@ -78,6 +78,15 @@
 
     .screenshot-text {
       width: 453px;
+      /* 3 columns: 145px + 9px + 145px + 9px + 145px = 453px */
+    }
+
+    .screenshot-placeholder {
+      width: 454px;
+      /* Remaining: 916px - 9px - 453px = 454px */
+      height: 320px;
+      background-color: #1a1a1a;
+      border: 1px solid #333333;
     }
 
     .screenshot-text h2 {
@@ -88,16 +97,9 @@
       font-size: 14px;
     }
 
-    .screenshot-placeholder {
-      width: 453px;
-      height: 320px;
-      background-color: #1a1a1a;
-      border: 1px solid #333333;
-    }
-
     /* Full width screenshot */
     .screenshot-full {
-      gap: 16px;
+      gap: 9px;
     }
 
     .screenshot-placeholder-full {
@@ -123,8 +125,11 @@
     @media (max-width: 479px) {
       .screenshots-container {
         max-width: 100%;
-        padding: 2rem 1rem;
-        gap: 1.5rem;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        gap: 18px;
       }
 
       .label {
@@ -136,7 +141,7 @@
       .screenshot-row {
         flex-direction: column;
         min-height: auto;
-        gap: 1rem;
+        gap: 9px;
       }
 
       .screenshot-text {
@@ -158,7 +163,7 @@
 
       /* Full width screenshot adjustments */
       .screenshot-full {
-        gap: 1rem;
+        gap: 9px;
       }
 
       .screenshot-placeholder-full {
@@ -184,7 +189,7 @@
       .screenshots-container {
         max-width: 299px;
         padding: 2.5rem 0;
-        gap: 1.25rem;
+        gap: 18px;
       }
 
       .label {
@@ -192,14 +197,15 @@
         letter-spacing: 1.5px;
       }
 
-      /* Scale down for 2-column layout */
+      /* Change to 1-column vertical layout */
       .screenshot-row {
-        min-height: 280px;
-        gap: 7px;
+        flex-direction: column;
+        min-height: auto;
+        gap: 9px;
       }
 
       .screenshot-text {
-        width: 146px;
+        width: 100%;
       }
 
       .screenshot-text h2 {
@@ -211,13 +217,13 @@
       }
 
       .screenshot-placeholder {
-        width: 146px;
-        height: 280px;
+        width: 100%;
+        height: 200px;
       }
 
       /* Full width - still full width of 2-column container */
       .screenshot-full {
-        gap: 12px;
+        gap: 9px;
       }
 
       .screenshot-placeholder-full {
@@ -241,9 +247,9 @@
     /* Medium (617-915px) - 4 columns */
     @media (min-width: 617px) and (max-width: 915px) {
       .screenshots-container {
-        max-width: 617px;
-        padding: 3rem 1rem;
-        gap: 1.5rem;
+        max-width: var(--grid-4-col);
+        padding: 3rem 0;
+        gap: 18px;
       }
 
       .label {
@@ -253,11 +259,14 @@
 
       .screenshot-row {
         min-height: 300px;
-        gap: 8px;
+        gap: 9px;
+        justify-content: center;
+        /* Center 607px content in 617px container */
       }
 
       .screenshot-text {
-        width: 304px;
+        width: 299px;
+        /* 2 columns: 145px + 9px + 145px = 299px */
       }
 
       .screenshot-text h2 {
@@ -269,22 +278,25 @@
       }
 
       .screenshot-placeholder {
-        width: 304px;
+        width: 299px;
+        /* 2 columns: 145px + 9px + 145px = 299px */
         height: 300px;
       }
 
       /* Full width adjustments */
       .screenshot-full {
-        gap: 14px;
+        gap: 9px;
+        justify-content: center;
       }
 
       .screenshot-placeholder-full {
-        width: 617px;
+        width: 607px;
+        /* 4 columns: 145px + 9px + 145px + 9px + 145px + 9px + 145px = 607px */
         height: 320px;
       }
 
       .screenshot-text-full {
-        width: 617px;
+        width: 607px;
       }
 
       .screenshot-text-full h2 {
@@ -300,8 +312,8 @@
     @media (min-width: 916px) {
       .screenshots-container {
         max-width: 916px;
-        padding: 3.75rem 1rem;
-        gap: 1.5rem;
+        padding: 3.75rem 0;
+        gap: 18px;
       }
 
       .label {
@@ -316,6 +328,7 @@
 
       .screenshot-text {
         width: 453px;
+        /* 3 columns: 145px * 3 + 9px * 2 = 453px */
       }
 
       .screenshot-text h2 {
@@ -327,13 +340,14 @@
       }
 
       .screenshot-placeholder {
-        width: 453px;
+        width: 454px;
+        /* Remaining: 916px - 9px - 453px = 454px */
         height: 320px;
       }
 
       /* Full width at 6 columns */
       .screenshot-full {
-        gap: 16px;
+        gap: 9px;
       }
 
       .screenshot-placeholder-full {

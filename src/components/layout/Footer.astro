@@ -17,12 +17,30 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
 
-      <!-- Spacer for column 3 -->
-      <div class="footer-spacer"></div>
-
       <!-- Product - Column 4 -->
-      <nav class="footer-nav" aria-label="フッタープロダクトリンク">
-        <h3 class="footer-nav-title">Product</h3>
+      <nav class="footer-nav footer-nav-product" aria-label="フッタープロダクトリンク">
+        <input id="footer-toggle-product" type="checkbox" class="footer-toggle" aria-hidden="true" />
+        <label for="footer-toggle-product" class="footer-nav-title-wrapper">
+          <h3 class="footer-nav-title">Product</h3>
+          <!-- Lucide Icons: chevron-down -->
+          <svg
+            class="footer-toggle-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path
+              d="m6 9 6 6 6-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </label>
         <ul class="footer-nav-list" role="list">
           <li><a href="/features" class="footer-nav-link hover:text-white transition-colors">Features</a></li>
           <li><a href="/download" class="footer-nav-link hover:text-white transition-colors">Download</a></li>
@@ -31,8 +49,29 @@ const currentYear = new Date().getFullYear();
       </nav>
 
       <!-- Resources - Column 5 -->
-      <nav class="footer-nav" aria-label="フッターリソースリンク">
-        <h3 class="footer-nav-title">Resources</h3>
+      <nav class="footer-nav footer-nav-resources" aria-label="フッターリソースリンク">
+        <input id="footer-toggle-resources" type="checkbox" class="footer-toggle" aria-hidden="true" />
+        <label for="footer-toggle-resources" class="footer-nav-title-wrapper">
+          <h3 class="footer-nav-title">Resources</h3>
+          <!-- Lucide Icons: chevron-down -->
+          <svg
+            class="footer-toggle-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path
+              d="m6 9 6 6 6-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </label>
         <ul class="footer-nav-list" role="list">
           <li><a href="/docs" class="footer-nav-link hover:text-white transition-colors">Documentation</a></li>
           <li><a href="https://github.com/S-IDE-studio/S-IDE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">GitHub</a></li>
@@ -40,8 +79,29 @@ const currentYear = new Date().getFullYear();
       </nav>
 
       <!-- Legal - Column 6 -->
-      <nav class="footer-nav" aria-label="フーターリーガルリンク">
-        <h3 class="footer-nav-title">Legal</h3>
+      <nav class="footer-nav footer-nav-legal" aria-label="フッターリーガルリンク">
+        <input id="footer-toggle-legal" type="checkbox" class="footer-toggle" aria-hidden="true" />
+        <label for="footer-toggle-legal" class="footer-nav-title-wrapper">
+          <h3 class="footer-nav-title">Legal</h3>
+          <!-- Lucide Icons: chevron-down -->
+          <svg
+            class="footer-toggle-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path
+              d="m6 9 6 6 6-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </label>
         <ul class="footer-nav-list" role="list">
           <li><a href="https://github.com/S-IDE-studio/S-IDE/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">License</a></li>
         </ul>
@@ -63,35 +123,38 @@ const currentYear = new Date().getFullYear();
   /* Base container */
   .footer-container {
     max-width: 916px;
-    padding: 48px 9px 24px;
+    padding: 48px 0 24px;
   }
 
-  /* Grid layout for main content */
+  /* Grid layout for main content - Large (916px+) - 6 columns */
   .footer-grid {
-    display: flex;
-    gap: 9px;
+    display: grid;
+    grid-template-columns: repeat(6, var(--grid-column-width));
+    gap: var(--grid-gap);
     margin-bottom: 32px;
   }
 
-  /* Brand section */
+  /* Brand - Column 1-2 */
   .footer-brand {
-    width: calc(145px * 2 + 9px);
-    flex-shrink: 0;
+    grid-column: 1 / 3;
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
-  /* Spacer for column 3 */
-  .footer-spacer {
-    width: 145px;
-    flex-shrink: 0;
+  /* Product Nav - Column 4 */
+  .footer-nav-product {
+    grid-column: 4;
   }
 
-  /* Navigation sections */
-  .footer-nav {
-    width: 145px;
-    flex-shrink: 0;
+  /* Resources Nav - Column 5 */
+  .footer-nav-resources {
+    grid-column: 5;
+  }
+
+  /* Legal Nav - Column 6 */
+  .footer-nav-legal {
+    grid-column: 6;
   }
 
   /* Typography */
@@ -106,11 +169,29 @@ const currentYear = new Date().getFullYear();
     color: #bbbbbb;
   }
 
+  .footer-toggle {
+    display: none;
+  }
+
+  .footer-nav-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+
   .footer-nav-title {
     font-weight: 600;
-    margin-bottom: 16px;
+    margin: 0;
     color: #ffffff;
     font-size: 14px;
+  }
+
+  .footer-toggle-icon {
+    color: #bbbbbb;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
   }
 
   .footer-nav-list {
@@ -130,7 +211,6 @@ const currentYear = new Date().getFullYear();
   /* Bottom section */
   .footer-bottom {
     padding-top: 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .footer-copyright {
@@ -146,48 +226,92 @@ const currentYear = new Date().getFullYear();
       padding-right: 18px;
     }
     .footer-grid {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       gap: 24px;
     }
     .footer-brand,
-    .footer-spacer,
-    .footer-nav {
-      width: 100%;
+    .footer-nav-product,
+    .footer-nav-resources,
+    .footer-nav-legal {
+      grid-column: 1;
     }
-    .footer-spacer {
+    /* 1カラム時もトグルで開閉できるようにする */
+    .footer-toggle-icon {
+      display: block;
+    }
+    .footer-nav-list {
       display: none;
+    }
+    .footer-toggle:checked ~ .footer-nav-list {
+      display: flex;
+    }
+    .footer-toggle:checked ~ .footer-nav-title-wrapper .footer-toggle-icon {
+      transform: rotate(180deg);
     }
   }
 
   /* Small (480-616px) - 2 columns */
   @media (min-width: 480px) and (max-width: 616px) {
     .footer-container {
-      max-width: 299px;
+      max-width: var(--grid-2-col);
     }
     .footer-grid {
-      flex-wrap: wrap;
+      grid-template-columns: repeat(2, var(--grid-column-width));
+      gap: 24px var(--grid-gap); /* 行間を24pxに広げる */
     }
     .footer-brand {
-      width: 100%;
+      grid-column: 1 / 3;
     }
-    .footer-spacer {
+    /* 3カテゴリを縦に並べる（2カラム幅で全幅に配置） */
+    .footer-nav-product,
+    .footer-nav-resources,
+    .footer-nav-legal {
+      grid-column: 1 / 3;
+    }
+    /* 2カラム時はトグルアイコンを表示し、リストはデフォルト非表示 */
+    .footer-toggle-icon {
+      display: block;
+    }
+    .footer-nav-list {
       display: none;
     }
-    .footer-nav {
-      width: calc(50% - 5px);
+    /* チェックが入ったときにリストを表示、アイコンを回転 */
+    .footer-toggle:checked ~ .footer-nav-list {
+      display: flex;
+    }
+    .footer-toggle:checked ~ .footer-nav-title-wrapper .footer-toggle-icon {
+      transform: rotate(180deg);
     }
   }
 
   /* Medium (617-915px) - 4 columns */
   @media (min-width: 617px) and (max-width: 915px) {
     .footer-container {
-      max-width: 617px;
+      max-width: var(--grid-4-col);
+    }
+    .footer-grid {
+      grid-template-columns: repeat(4, var(--grid-column-width));
+      gap: var(--grid-gap);
     }
     .footer-brand {
-      width: calc(145px * 2 + 9px);
+      /* S-IDEセクションを1カラムに収める */
+      grid-column: 1;
     }
-    .footer-spacer {
+    .footer-nav-product {
+      grid-column: 2;
+    }
+    .footer-nav-resources {
+      grid-column: 3;
+    }
+    .footer-nav-legal {
+      grid-column: 4;
+    }
+    /* 4カラム以上ではトグルアイコン非表示、リストは常に表示 */
+    .footer-toggle-icon {
       display: none;
+    }
+    .footer-nav-list {
+      display: flex;
     }
   }
 
@@ -195,6 +319,29 @@ const currentYear = new Date().getFullYear();
   @media (min-width: 916px) {
     .footer-container {
       max-width: 916px;
+    }
+    .footer-grid {
+      grid-template-columns: repeat(6, var(--grid-column-width));
+      gap: var(--grid-gap);
+    }
+    .footer-brand {
+      grid-column: 1 / 3;
+    }
+    .footer-nav-product {
+      grid-column: 4;
+    }
+    .footer-nav-resources {
+      grid-column: 5;
+    }
+    .footer-nav-legal {
+      grid-column: 6;
+    }
+    /* 6カラム以上ではトグルアイコン非表示、リストは常に表示 */
+    .footer-toggle-icon {
+      display: none;
+    }
+    .footer-nav-list {
+      display: flex;
     }
   }
 </style>

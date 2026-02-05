@@ -36,12 +36,13 @@ const sizeClasses = {
 const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${pillClass} ${className}`;
 
 const Tag = href ? 'a' : 'button';
+const buttonAttrs = Tag === 'button' ? { type } : {};
 ---
 
 <Tag
   class={classes}
   href={href}
-  type={type}
+  {...buttonAttrs}
 >
   <slot />
 </Tag>

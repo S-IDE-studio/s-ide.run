@@ -15,10 +15,33 @@ const { title, description, icon, gradient = false, class: className = '' } = As
 const sanitizedIcon = icon
   ? DOMPurify.sanitize(icon, {
       USE_PROFILES: { svg: true, svgFilters: true },
-      ADD_ATTR: ['xmlns', 'viewBox', 'fill', 'stroke'],
+      ADD_ATTR: [
+        'xmlns',
+        'viewBox',
+        'fill',
+        'stroke',
+        'stroke-width',
+        'stroke-linecap',
+        'stroke-linejoin',
+        'class',
+        'width',
+        'height',
+        'd',
+        'cx',
+        'cy',
+        'r',
+      ],
       ALLOW_DATA_ATTR: false,
-      FORBID_TAGS: ['script', 'object', 'embed', 'iframe'],
-      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover'],
+      FORBID_TAGS: ['script', 'object', 'embed', 'iframe', 'style'],
+      FORBID_ATTR: [
+        'onerror',
+        'onload',
+        'onclick',
+        'onmouseover',
+        'onfocus',
+        'onblur',
+        'xlink:href',
+      ],
     })
   : '';
 

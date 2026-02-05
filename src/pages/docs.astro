@@ -1,0 +1,246 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const docs = await getCollection('docs');
+const sortedDocs = docs.sort((a, b) => {
+  const ao = a.data.order ?? 0;
+  const bo = b.data.order ?? 0;
+  if (ao === bo) return a.id.localeCompare(b.id);
+  return ao - bo;
+});
+---
+
+<Layout title="ドキュメント - S-IDE" type="article">
+  <section class="docs-section">
+    <div class="container-grid docs-container">
+      <!-- Sidebar: 2カラム -->
+      <aside class="docs-sidebar">
+        <nav class="docs-nav" aria-label="ドキュメントナビゲーション">
+          <ul class="docs-nav-list" role="list">
+            {sortedDocs.map((entry) => (
+              <li class="docs-nav-item">
+                <a href={`/docs/${entry.id}/`} class="docs-nav-link" aria-current={Astro.url.pathname === `/docs/${entry.id}/` ? "page" : undefined}>
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content: 4カラム -->
+      <main class="docs-main">
+        <header class="docs-header">
+          <h1 class="docs-title">ドキュメント</h1>
+          <p class="docs-subtitle">
+            S-IDE のセットアップ方法、機能の使い方、ベストプラクティスをまとめたドキュメントです。
+          </p>
+        </header>
+
+        {sortedDocs.length === 0 ? (
+          <p class="docs-empty">
+            まだ公開ドキュメントがありません。今後のアップデートで順次追加予定です。
+          </p>
+        ) : (
+          <ul class="docs-list" role="list">
+            {sortedDocs.map((entry) => (
+              <li class="docs-item">
+                <a href={`/docs/${entry.id}/`} class="docs-link">
+                  <h2 class="docs-item-title">{entry.data.title}</h2>
+                  {entry.data.description && (
+                    <p class="docs-item-description">{entry.data.description}</p>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </main>
+    </div>
+  </section>
+
+  <style scoped>
+    .docs-section {
+      padding: 80px 0 120px;
+    }
+
+    .docs-container {
+      display: grid;
+      grid-template-columns: var(--grid-2-col) var(--grid-4-col);
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    /* Sidebar: 2カラム */
+    .docs-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+
+    .docs-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .docs-nav-item {
+      list-style: none;
+    }
+
+    .docs-nav-link {
+      display: block;
+      padding: 8px 12px;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+    }
+
+    .docs-nav-link:hover {
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-card);
+    }
+
+    /* Main Content: 4カラム */
+    .docs-main {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .docs-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .docs-title {
+      color: var(--color-text-primary);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+    }
+
+    .docs-subtitle {
+      color: var(--color-text-secondary);
+      font-size: 18px;
+    }
+
+    .docs-empty {
+      color: var(--color-text-secondary);
+      font-size: 16px;
+    }
+
+    .docs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .docs-item {
+      list-style: none;
+    }
+
+    .docs-link {
+      display: block;
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg-card);
+      text-decoration: none;
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .docs-link:hover {
+      background-color: var(--color-bg-card-hover);
+      transform: translateY(-1px);
+    }
+
+    .docs-item-title {
+      color: var(--color-text-primary);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .docs-item-description {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Mobile (< 480px) */
+    @media (max-width: 479px) {
+      .docs-section {
+        padding: 56px 0 80px;
+      }
+      .docs-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .docs-sidebar {
+        position: static;
+      }
+      .docs-title {
+        font-size: 32px;
+      }
+      .docs-subtitle {
+        font-size: 16px;
+      }
+      .docs-item-title {
+        font-size: 16px;
+      }
+      .docs-item-description {
+        font-size: 13px;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .docs-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .docs-sidebar {
+        position: static;
+      }
+      .docs-title {
+        font-size: 36px;
+      }
+      .docs-subtitle {
+        font-size: 17px;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .docs-container {
+        grid-template-columns: var(--grid-column-width) var(--grid-3-col);
+        gap: var(--grid-gap);
+      }
+      .docs-title {
+        font-size: 42px;
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .docs-container {
+        grid-template-columns: var(--grid-2-col) var(--grid-4-col);
+        gap: var(--grid-gap);
+      }
+    }
+  </style>
+</Layout>

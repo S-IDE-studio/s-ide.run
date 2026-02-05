@@ -15,8 +15,8 @@
 
   /* Text with warmth */
   --color-text-primary: #ffffff;
-  --color-text-secondary: #bbbbbb;
-  --color-text-muted: #666666;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
 
   /* Semantic colors */
   --color-border: rgba(255, 255, 255, 0.06);
@@ -34,7 +34,7 @@
   --grid-gap: 9px;
   --grid-2-col: 299px;
   --grid-3-col: 453px;
-  --grid-4-col: 617px;
+  --grid-4-col: 607px;
   --grid-6-col: 916px;
 
   /* Font */
@@ -52,8 +52,6 @@
   max-width: var(--grid-6-col);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--grid-gap);
-  padding-right: var(--grid-gap);
 }
 
 /* 4-column breakpoint (617-916px) */
@@ -294,6 +292,17 @@ body {
   outline-offset: 2px;
 }
 
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 a:focus-visible,
 button:focus-visible {
   border-radius: var(--radius-sm);
@@ -475,7 +484,7 @@ body::before {
   content: "";
   position: fixed;
   top: 0;
-  left: calc(50% - var(--grid-6-col) / 2 + var(--grid-gap));
+  left: calc(50% - var(--grid-6-col) / 2);
   width: var(--grid-6-col);
   height: 100vh;
   pointer-events: none;
@@ -525,7 +534,7 @@ body::before {
 /* 4-column grid guide (617-916px) */
 @media (max-width: 916px) {
   body::before {
-    left: calc(50% - var(--grid-4-col) / 2 + var(--grid-gap));
+    left: calc(50% - var(--grid-4-col) / 2);
     width: var(--grid-4-col);
     background-image:
       linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
@@ -544,7 +553,7 @@ body::before {
       308px 0,
       453px 0,
       462px 0,
-      615px 0;
+      606px 0;
     background-size:
       1px 100%,
       1px 100%,
@@ -560,7 +569,7 @@ body::before {
 /* 2-column grid guide (480-617px) */
 @media (max-width: 617px) {
   body::before {
-    left: calc(50% - var(--grid-2-col) / 2 + var(--grid-gap));
+    left: calc(50% - var(--grid-2-col) / 2);
     width: var(--grid-2-col);
     background-image:
       linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
@@ -594,32 +603,29 @@ body::before {
 .releases-container {
   position: relative;
   background-color: var(--color-bg-dark);
-  height: 2000px;
+  padding: 80px 0 120px;
 }
 
 .releases-grid {
   position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: var(--grid-6-col);
-  height: 2000px;
+  /* 幅・マージンは container-grid に委譲 */
+}
+
+.releases-page-title {
+  color: var(--color-text-primary);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
 }
 
 .releases-label {
-  position: absolute;
-  left: 0;
-  top: 60px;
+  margin-bottom: 24px;
   color: var(--color-text-muted);
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
-}
-
-.release-section {
-  position: absolute;
-  left: 0;
-  width: var(--grid-6-col);
 }
 
 .release-header {
@@ -659,7 +665,8 @@ body::before {
 }
 
 .screenshot-large {
-  width: var(--grid-6-col);
+  width: 100%;
+  max-width: var(--grid-6-col);
   height: 400px;
   margin-bottom: 16px;
 }
@@ -709,88 +716,81 @@ body::before {
   font-weight: 400;
 }
 
-/* Position modifiers */
-.release-v120 {
-  top: 120px;
+/* Release section responsive typography */
+@media (max-width: 479px) {
+  .release-version {
+    font-size: 16px;
+  }
+  .release-date {
+    font-size: 12px;
+  }
+  .release-title {
+    font-size: 18px;
+  }
+  .release-description {
+    font-size: 13px;
+  }
 }
 
-.release-v110 {
-  top: 704px;
+@media (min-width: 480px) and (max-width: 616px) {
+  .release-version {
+    font-size: 18px;
+  }
+  .release-title {
+    font-size: 19px;
+  }
 }
 
-.release-v100 {
-  top: 1240px;
+/* ========================================
+   DOWNLOAD PAGE STYLES
+   ======================================== */
+
+.download-container {
+  width: var(--grid-6-col);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+}
+
+.download-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--grid-gap);
+  margin-bottom: var(--grid-gap);
+}
+
+.download-row > article {
+  flex: 0 0 var(--grid-3-col);
+  max-width: 100%;
+}
+
+@media (max-width: 916px) {
+  .download-container {
+    width: var(--grid-4-col);
+  }
+  .download-row > article {
+    flex: 0 0 var(--grid-2-col);
+  }
+}
+
+@media (max-width: 617px) {
+  .download-container {
+    width: var(--grid-2-col);
+  }
+  .download-row > article {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  .download-container {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
 }
 
 /* ========================================
    FOOTER STYLES
    ======================================== */
-
-.footer-container {
-  width: var(--grid-6-col);
-  height: 250px;
-  padding: 48px 0;
-}
-
-.footer-brand {
-  left: 0;
-  width: var(--grid-2-col);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.footer-brand-text {
-  font-weight: 700;
-  color: var(--color-text-primary);
-  font-size: 16px;
-}
-
-.footer-description {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
-
-.footer-nav {
-  position: absolute;
-}
-
-.footer-nav-title {
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: var(--color-text-primary);
-  font-size: 14px;
-}
-
-.footer-nav-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.footer-nav-link {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.footer-bottom {
-  left: 0;
-  right: 0;
-  top: 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.footer-bottom-content {
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-copyright {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
+/* Footer styles are now scoped in Footer.astro component */

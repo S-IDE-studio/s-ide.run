@@ -9,16 +9,42 @@ const navItems = [
 <header class="sticky top-0 z-50 w-full border-b border-white/10 bg-black">
   <nav class="mx-auto flex items-center h-20 header-container" aria-label="メインナビゲーション">
     <!-- Logo -->
-    <a href="/" class="flex items-center justify-center gap-2 logo-column" aria-label="S-IDE ホーム">
-      <img src="/s-ide-icon.svg" alt="S-IDE" class="w-[30px] h-[30px]" loading="lazy" />
+    <a href="/" class="flex items-center justify-start gap-2 logo-column" aria-label="S-IDE ホーム">
+      <img src="/s-ide-icon.svg" width="30" height="30" alt="S-IDE" class="w-[30px] h-[30px]" loading="lazy" />
       <span class="text-xl font-bold text-white">S-IDE</span>
     </a>
 
-    <!-- Spacer for columns 2-3 -->
-    <div class="nav-spacer"></div>
+    <!-- 2カラム用メニュー開閉トグル（CSSのみで制御） -->
+    <input id="nav-toggle" type="checkbox" class="nav-toggle" aria-hidden="true" />
+    <label
+      for="nav-toggle"
+      class="nav-toggle-label"
+      aria-label="メインメニューを開閉"
+      aria-controls="primary-navigation"
+      role="button"
+    >
+      <!-- Lucide Icons: chevron-down -->
+      <svg
+        class="nav-toggle-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        aria-hidden="true"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </label>
 
     <!-- Navigation -->
-    <ul class="flex items-center gap-[9px]" role="list">
+    <ul id="primary-navigation" class="flex items-center gap-[9px] nav-list" role="list">
       {navItems.map((item) => (
         <li class="flex items-center justify-center nav-item">
           <a
@@ -37,83 +63,198 @@ const navItems = [
   </nav>
 </header>
 
-<style scoped>
-  /* Base container */
-  .header-container {
-    max-width: 916px;
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-
-  /* Logo column width */
-  .logo-column {
-    width: 145px;
-    flex-shrink: 0;
-  }
-
-  /* Spacer for columns 2-3 */
-  .nav-spacer {
-    width: calc(145px * 2 + 9px * 2);
-    flex-shrink: 0;
-  }
-
-  /* Navigation item width */
-  .nav-item {
-    width: 145px;
-    flex-shrink: 0;
-  }
-
-  /* Mobile (< 480px) */
-  @media (max-width: 479px) {
+  <style scoped>
+    /* Base container: 6カラムグリッドを前提にしたヘッダー */
     .header-container {
-      max-width: 100%;
-      padding-left: 18px;
-      padding-right: 18px;
+      max-width: var(--grid-6-col);
+      display: grid;
+      grid-template-columns: repeat(6, var(--grid-column-width));
+      column-gap: var(--grid-gap);
+      align-items: center;
     }
+
+    /* Logo column width & placement */
     .logo-column {
+      grid-column: 1;
+      width: var(--grid-column-width);
+      flex-shrink: 0;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    /* トグルアイコンはデフォルト非表示 */
+    .nav-toggle-label {
+      grid-column: 2;
+      display: none;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
+
+    /* Navigation list (全ナビのグリッド上の位置) */
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      grid-column: 4 / 7; /* 大画面では4〜6列目を占有 */
+    }
+
+    /* Navigation item width */
+    .nav-item {
+      width: var(--grid-column-width);
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    /* Navigation link centering */
+    .nav-item a {
+      display: block;
       width: 100%;
     }
-    .nav-spacer {
+
+    .nav-toggle {
       display: none;
     }
-    .nav-item {
-      width: 100%;
+    .nav-toggle-icon {
+      color: #bbbbbb;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
-    nav {
-      flex-direction: column;
-      gap: 16px;
-      height: auto;
-      padding-top: 16px;
-      padding-bottom: 16px;
-    }
-    ul {
-      flex-direction: column;
-      width: 100%;
-      gap: 12px;
-    }
-  }
 
-  /* Small (480-616px) - 2 columns */
-  @media (min-width: 480px) and (max-width: 616px) {
-    .header-container {
-      max-width: 299px;
+    /* Mobile (< 480px) */
+    @media (max-width: 479px) {
+      .header-container {
+        max-width: 100%;
+        grid-template-columns: 1fr 24px; /* 左: ロゴ, 右: トグルアイコン */
+        column-gap: 8px;
+        row-gap: 16px;
+        padding-left: 18px;
+        padding-right: 18px;
+        height: auto;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+      .logo-column {
+        grid-column: 1;
+        width: auto;
+      }
+      /* 1カラム時もS-IDEと同じ行の右端にトグルアイコンを表示 */
+      .nav-toggle-label {
+        display: flex;
+        grid-column: 2;
+        justify-content: flex-end;
+      }
+      .nav-toggle-icon {
+        display: block;
+      }
+      .nav-list {
+        grid-column: 1 / 3;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        display: none;
+      }
+      .nav-item {
+        width: 100%;
+        text-align: left;
+      }
+      .nav-item a {
+        display: block;
+        padding: 10px 0;
+        text-align: left;
+        border-radius: 0;
+        background-color: transparent;
+        border-bottom: none;
+      }
+      .nav-toggle:checked ~ .nav-list {
+        display: flex;
+      }
+      .nav-toggle:checked ~ .nav-toggle-label .nav-toggle-icon {
+        transform: rotate(180deg);
+      }
     }
-  }
 
-  /* Medium (617-915px) - 4 columns */
-  @media (min-width: 617px) and (max-width: 915px) {
-    .header-container {
-      max-width: 617px;
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .header-container {
+        max-width: var(--grid-2-col);
+        grid-template-columns: repeat(2, var(--grid-column-width));
+        row-gap: 24px;
+        height: auto;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .logo-column {
+        grid-column: 1;
+      }
+      /* 2カラム時はトグルアイコンをS-IDEと同じ行（2列目）に表示 */
+      .nav-toggle-label {
+        display: flex;
+        grid-column: 2;
+        width: var(--grid-column-width);
+      }
+      .nav-toggle-icon {
+        display: block;
+      }
+      .nav-list {
+        grid-column: 1 / 3;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-top: 0;
+        display: none;
+      }
+      .nav-item {
+        width: 100%;
+        text-align: left;
+      }
+      .nav-item a {
+        display: block;
+        padding: 10px 0;
+        text-align: left;
+        border-radius: 0;
+        background-color: transparent;
+        border-bottom: none;
+      }
+      /* チェックが入ったときにメニューを展開、アイコンを回転 */
+      .nav-toggle:checked ~ .nav-list {
+        display: flex;
+      }
+      .nav-toggle:checked ~ .nav-toggle-label .nav-toggle-icon {
+        transform: rotate(180deg);
+      }
     }
-    .nav-spacer {
-      width: calc(145px * 2 + 9px * 2);
-    }
-  }
 
-  /* Large (916px+) - 6 columns */
-  @media (min-width: 916px) {
-    .header-container {
-      max-width: 916px;
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .header-container {
+        max-width: var(--grid-4-col);
+        grid-template-columns: repeat(4, var(--grid-column-width));
+      }
+      .logo-column {
+        grid-column: 1;
+      }
+      .nav-list {
+        grid-column: 2 / 5; /* 2〜4列目にナビを配置 */
+        justify-content: flex-start; /* グリッドのカラム幅＋gapだけで正確に揃える */
+      }
     }
-  }
-</style>
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .header-container {
+        max-width: var(--grid-6-col);
+        grid-template-columns: repeat(6, var(--grid-column-width));
+      }
+      .logo-column {
+        grid-column: 1;
+      }
+      .nav-list {
+        grid-column: 4 / 7; /* 4〜6列目にナビを配置 */
+        justify-content: space-between;
+      }
+    }
+  </style>

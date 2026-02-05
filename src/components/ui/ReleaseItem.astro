@@ -20,24 +20,22 @@ const {
   title,
   description,
   features = [],
-  topPosition,
   screenshotSize = 'small',
   showScreenshotLeft = false,
 } = Astro.props;
 
 const hasScreenshot = screenshotSize !== 'none';
-const positionStyle = topPosition ? `top: ${topPosition};` : '';
-const marginBottom = screenshotSize === 'large' ? '16px' : '0';
+// 旧レイアウト互換用の topPosition は、レスポンシブ化に伴い無視する
 ---
 
-<article class="release-section" style={positionStyle}>
+<article class="release-section">
   <header class="release-header">
     <h2 class="release-version">{version}</h2>
     <span class="release-date">{date}</span>
   </header>
 
   {screenshotSize === 'large' && (
-    <div class="screenshot-placeholder screenshot-large" style={`margin-bottom: ${marginBottom};`} role="img" aria-label={`${version} スクリーンショット`}>
+    <div class="screenshot-placeholder screenshot-large screenshot-large-with-margin" role="img" aria-label={`${version} スクリーンショット`}>
       <span>Screenshot</span>
     </div>
   )}
@@ -71,9 +69,9 @@ const marginBottom = screenshotSize === 'large' ? '16px' : '0';
 
 <style>
   .release-section {
-    position: absolute;
-    left: 0;
-    width: var(--grid-6-col);
+    position: relative;
+    width: 100%;
+    margin-bottom: 64px;
   }
 
   .release-header {
@@ -113,8 +111,12 @@ const marginBottom = screenshotSize === 'large' ? '16px' : '0';
   }
 
   .screenshot-large {
-    width: var(--grid-6-col);
+    width: 100%;
     height: 400px;
+  }
+
+  .screenshot-large-with-margin {
+    margin-bottom: 16px;
   }
 
   .screenshot-small {
@@ -160,5 +162,38 @@ const marginBottom = screenshotSize === 'large' ? '16px' : '0';
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
+  }
+
+  /* Responsive layout */
+  @media (max-width: 915px) {
+    .release-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+  }
+
+  @media (max-width: 915px) {
+    .screenshot-small {
+      width: 100%;
+    }
+    .release-content {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .release-version {
+      font-size: 16px;
+    }
+    .release-date {
+      font-size: 12px;
+    }
+    .release-title {
+      font-size: 18px;
+    }
+    .release-description {
+      font-size: 13px;
+    }
   }
 </style>

@@ -30,45 +30,41 @@ const {
 const computedShortName = shortName ?? name;
 const iconDisplay = icon ?? computedShortName.toUpperCase();
 const sizeDisplay = fileSize ? `(${fileSize})` : '';
-const containerStyle = isComingSoon
-  ? 'width: 453px; background-color: #1a1a1a; border: 1px solid #333333; padding: 24px; opacity: 0.5;'
-  : 'width: 453px; background-color: #1a1a1a; border: 1px solid #333333; padding: 24px;';
 const containerClass = isComingSoon
-  ? 'flex flex-col items-center justify-center text-center'
-  : 'flex flex-col';
+  ? 'flex flex-col platform-card platform-card-coming-soon'
+  : 'flex flex-col platform-card';
 const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
 ---
 
-<article style={containerStyle}>
+<article class={containerClass}>
   <div class={containerClass} style={innerDivStyle}>
     {isComingSoon ? (
       <>
-        <div style="font-size: 32px;" aria-hidden="true">{iconDisplay}</div>
+        <div class="platform-card-icon-large" aria-hidden="true">{iconDisplay}</div>
         <div>
-          <h2 style="color: #ffffff; font-family: Inter; font-size: 20px; font-weight: 600;">{name}</h2>
-          <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal;">Coming Soon</p>
+          <h2 class="platform-card-title">{name}</h2>
+          <p class="platform-card-coming-soon-text">Coming Soon</p>
         </div>
       </>
     ) : (
       <>
-        <div class="flex items-center" style="gap: 12px;">
-          <div class="flex items-center justify-center" style="width: 48px; height: 48px; background-color: #ffffff; border-radius: var(--radius-md);" aria-hidden="true">
-            <span style="color: #000000; font-family: Inter; font-size: 12px; font-weight: 700;">{computedShortName.toUpperCase()}</span>
+        <div class="flex items-center platform-card-header">
+          <div class="platform-card-icon" aria-hidden="true">
+            <span class="platform-card-icon-text">{computedShortName.toUpperCase()}</span>
           </div>
           <div>
-            <h2 style="color: #ffffff; font-family: Inter; font-size: 20px; font-weight: 600;">{name}</h2>
-            <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal;">{description}</p>
+            <h2 class="platform-card-title">{name}</h2>
+            <p class="platform-card-description">{description}</p>
           </div>
         </div>
-        <div class="flex flex-col" style="gap: 8px;">
+        <div class="flex flex-col platform-card-actions">
           <a
             href={downloadUrl}
-            class="flex items-center justify-center transition-opacity"
+            class="platform-card-button"
             class:opacity-50={!isAvailable}
-            style="height: 44px; background-color: #ffffff; border-radius: var(--radius-pill);"
             aria-label={`${name}をダウンロード`}
           >
-            <span style="color: #000000; font-family: Inter; font-size: 14px; font-weight: 600;">
+            <span class="platform-card-button-text">
               {buttonLabel} {sizeDisplay}
             </span>
           </a>
@@ -77,3 +73,90 @@ const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
     )}
   </div>
 </article>
+
+<style>
+  .platform-card {
+    box-sizing: border-box;
+  }
+
+  .platform-card-coming-soon {
+    opacity: 0.5;
+  }
+
+  .platform-card-icon-large {
+    font-size: 32px;
+    align-self: flex-start;
+  }
+
+  .platform-card-title {
+    color: var(--color-text-primary);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    text-align: left;
+  }
+
+  .platform-card-coming-soon-text {
+    color: var(--color-text-secondary);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    text-align: left;
+  }
+
+  .platform-card-header {
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .platform-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-text-primary);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .platform-card-icon-text {
+    color: var(--color-bg-dark);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .platform-card-description {
+    color: var(--color-text-secondary);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  .platform-card-actions {
+    gap: 8px;
+  }
+
+  .platform-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 100%;
+    background-color: var(--color-text-primary);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .platform-card-button-text {
+    color: var(--color-bg-dark);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>

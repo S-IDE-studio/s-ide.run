@@ -78,16 +78,16 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
 ---
 
 <Layout title="ダウンロード - S-IDE">
-  <section class="relative bg-black" style="min-height: 100vh; padding-bottom: 80px;">
+  <section class="relative bg-black download-section">
     <!-- Grid Container -->
-    <div class="relative mx-auto" style="width: 916px;">
+    <div class="relative download-container">
       <!-- Page Title -->
-      <h1 style="left: 0; top: 20px; color: #ffffff; font-family: Inter; font-size: 48px; font-weight: 700; margin-bottom: 20px;">
+      <h1 class="download-title">
         ダウンロード
       </h1>
 
       {releaseData.error && (
-        <div style="background-color: #3b1a1a; border: 1px solid #ef4444; border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
+        <div role="alert" style="background-color: #3b1a1a; border: 1px solid #ef4444; border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
           <p style="color: #fca5a5; font-size: 14px; margin: 0;">
             GitHubリリース情報の取得に失敗しました。最新バージョンは
             <a href="https://github.com/S-IDE-studio/S-IDE/releases" target="_blank" rel="noopener noreferrer" style="color: #60a5fa; text-decoration: underline;">GitHub Releases</a>
@@ -97,7 +97,7 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
       )}
 
       <!-- Row 1: Windows and macOS -->
-      <div class="flex" style="gap: 9px; margin-bottom: 9px;">
+      <div class="download-row">
         <PlatformCard
           name="Windows"
           shortName="WIN"
@@ -119,7 +119,7 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
       </div>
 
       <!-- Row 2: Linux and iOS -->
-      <div class="flex" style="gap: 9px; margin-bottom: 9px;">
+      <div class="download-row">
         <PlatformCard
           name="Linux"
           shortName="LIN"
@@ -140,7 +140,7 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
       </div>
 
       <!-- Row 3: Android -->
-      <div class="flex" style="gap: 9px;">
+      <div class="download-row">
         <PlatformCard
           name="Android"
           shortName="Android"
@@ -152,7 +152,7 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
       </div>
 
       <!-- GitHub Link -->
-      <div class="text-center" style="margin-top: 48px;">
+      <div class="text-center download-github">
         <a
           href="https://github.com/S-IDE-studio/S-IDE/releases"
           target="_blank"
@@ -165,4 +165,29 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
       </div>
     </div>
   </section>
+
+  <style scoped>
+    .download-section {
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .download-title {
+      color: #ffffff;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .download-github {
+      margin-top: 48px;
+    }
+
+    @media (max-width: 479px) {
+      .download-title {
+        font-size: 32px;
+      }
+    }
+  </style>
 </Layout>
