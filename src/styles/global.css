@@ -42,6 +42,60 @@
 }
 
 /* ========================================
+   SCROLLBAR - CUSTOM STYLE
+   ======================================== */
+
+/* Base styles for all browsers */
+html {
+  /* Reserve space for scrollbar to prevent layout shift */
+  scrollbar-gutter: stable;
+
+  /* Firefox: thin scrollbar (medium width) */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+  /* Medium width (8px) */
+  width: 8px;
+  height: 8px;
+}
+
+/* Track (hidden by default, visible on hover) */
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Thumb (scrollbar handle) */
+html::-webkit-scrollbar-thumb {
+  /* Semi-transparent white */
+  background: rgba(255, 255, 255, 0.2);
+  /* No border radius */
+  border-radius: 0;
+}
+
+/* Thumb hover state */
+html::-webkit-scrollbar-thumb:hover {
+  /* More visible on hover */
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Hide scrollbar when not hovering (Webkit only) */
+html::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Show on hover via parent or direct hover */
+html:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+html:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ========================================
    GRID SYSTEM - RESPONSIVE
    ======================================== */
 
