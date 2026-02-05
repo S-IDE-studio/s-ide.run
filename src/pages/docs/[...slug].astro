@@ -25,49 +25,290 @@ const hasNext = currentIndex < docs.length - 1;
 const { Content } = await render(doc);
 ---
 
-<Layout title={`${doc.data.title} - S-IDE`}>
-  <section class="py-20 sm:py-32">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <!-- Breadcrumb -->
-      <nav class="mb-8" aria-label="パンくずリスト">
-        <a href="/docs" class="text-blue-400 hover:underline">← ドキュメント一覧</a>
-      </nav>
+<Layout title={`${doc.data.title} - S-IDE`} type="article">
+  <section class="docs-section">
+    <div class="container-grid docs-container">
+      <!-- Sidebar: 2カラム -->
+      <aside class="docs-sidebar">
+        <nav class="docs-nav" aria-label="ドキュメントナビゲーション">
+          <ul class="docs-nav-list" role="list">
+            {docs.map((entry) => (
+              <li class="docs-nav-item">
+                <a href={`/docs/${entry.id}/`} class="docs-nav-link" aria-current={entry.id === doc.id ? "page" : undefined}>
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
 
-      <!-- Doc Content -->
-      <article class="prose prose-invert prose-blue max-w-none">
-        <h1 class="text-4xl font-bold mb-4">{doc.data.title}</h1>
-        {doc.data.description && (
-          <p class="text-xl text-[#94a3b8] mb-8">{doc.data.description}</p>
-        )}
-        <!-- Using Astro's Content component which safely renders MDX -->
-        <Content />
-      </article>
+      <!-- Main Content: 4カラム -->
+      <main class="docs-main">
+        <!-- Breadcrumb -->
+        <nav class="docs-breadcrumb" aria-label="パンくずリスト">
+          <a href="/docs" class="docs-breadcrumb-link">← ドキュメント一覧</a>
+        </nav>
 
-      <!-- Navigation -->
-      <nav class="mt-16 pt-8 border-t border-white/10 flex justify-between" aria-label="ドキュメントナビゲーション">
-        {hasPrevious && (() => {
-          const prevDoc = docs[currentIndex - 1];
-          return (
-            <a
-              href={`/docs/${prevDoc.id}`}
-              class="text-blue-400 hover:underline"
-            >
-              ← {prevDoc.data.title}
-            </a>
-          );
-        })()}
-        {hasNext && (() => {
-          const nextDoc = docs[currentIndex + 1];
-          return (
-            <a
-              href={`/docs/${nextDoc.id}`}
-              class="text-blue-400 hover:underline ml-auto"
-            >
-              {nextDoc.data.title} →
-            </a>
-          );
-        })()}
-      </nav>
+        <!-- Doc Content -->
+        <article class="docs-content">
+          <h1 class="docs-content-title">{doc.data.title}</h1>
+          {doc.data.description && (
+            <p class="docs-content-description">{doc.data.description}</p>
+          )}
+          <div class="docs-content-body prose prose-invert prose-blue max-w-none">
+            <Content />
+          </div>
+        </article>
+
+        <!-- Navigation -->
+        <nav class="docs-nav-nextprev" aria-label="ドキュメントナビゲーション">
+          {hasPrevious && (() => {
+            const prevDoc = docs[currentIndex - 1];
+            return (
+              <a href={`/docs/${prevDoc.id}`} class="docs-nav-link-prev">
+                ← {prevDoc.data.title}
+              </a>
+            );
+          })()}
+          {hasNext && (() => {
+            const nextDoc = docs[currentIndex + 1];
+            return (
+              <a href={`/docs/${nextDoc.id}`} class="docs-nav-link-next">
+                {nextDoc.data.title} →
+              </a>
+            );
+          })()}
+        </nav>
+      </main>
     </div>
   </section>
+
+  <style scoped>
+    .docs-section {
+      padding: 80px 0 120px;
+    }
+
+    .docs-container {
+      display: grid;
+      grid-template-columns: var(--grid-2-col) var(--grid-4-col);
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    /* Sidebar: 2カラム */
+    .docs-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+
+    .docs-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .docs-nav-item {
+      list-style: none;
+    }
+
+    .docs-nav-link {
+      display: block;
+      padding: 8px 12px;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+    }
+
+    .docs-nav-link:hover {
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-card);
+    }
+
+    /* Main Content: 4カラム */
+    .docs-main {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .docs-breadcrumb {
+      display: flex;
+    }
+
+    .docs-breadcrumb-link {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .docs-breadcrumb-link:hover {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+    }
+
+    .docs-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .docs-content-title {
+      color: var(--color-text-primary);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+    }
+
+    .docs-content-description {
+      color: var(--color-text-secondary);
+      font-size: 18px;
+    }
+
+    .docs-content-body {
+      color: var(--color-text-secondary);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .docs-content-body :global(h2) {
+      color: var(--color-text-primary);
+      font-size: 32px;
+      font-weight: 600;
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    .docs-content-body :global(h3) {
+      color: var(--color-text-primary);
+      font-size: 24px;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .docs-content-body :global(p) {
+      margin-bottom: 16px;
+    }
+
+    .docs-content-body :global(code) {
+      background-color: var(--color-bg-card);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .docs-content-body :global(pre) {
+      background-color: var(--color-bg-card);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+
+    .docs-content-body :global(pre code) {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .docs-content-body :global(ul),
+    .docs-content-body :global(ol) {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    .docs-content-body :global(li) {
+      margin-bottom: 8px;
+    }
+
+    .docs-content-body :global(a) {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+    }
+
+    .docs-content-body :global(a:hover) {
+      color: var(--color-text-secondary);
+    }
+
+    .docs-nav-nextprev {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 32px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .docs-nav-link-prev,
+    .docs-nav-link-next {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .docs-nav-link-prev:hover,
+    .docs-nav-link-next:hover {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+    }
+
+    .docs-nav-link-next {
+      margin-left: auto;
+    }
+
+    /* Mobile (< 480px) */
+    @media (max-width: 479px) {
+      .docs-section {
+        padding: 56px 0 80px;
+      }
+      .docs-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .docs-sidebar {
+        position: static;
+      }
+      .docs-content-title {
+        font-size: 32px;
+      }
+      .docs-content-description {
+        font-size: 16px;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .docs-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .docs-sidebar {
+        position: static;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .docs-container {
+        grid-template-columns: var(--grid-column-width) var(--grid-3-col);
+        gap: var(--grid-gap);
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .docs-container {
+        grid-template-columns: var(--grid-2-col) var(--grid-4-col);
+        gap: var(--grid-gap);
+      }
+    }
+  </style>
 </Layout>
