@@ -6,35 +6,181 @@ import Button from '../ui/Button.astro';
 const t = getTranslations(Astro.currentLocale);
 ---
 
-<section class="relative overflow-hidden py-20 sm:py-32">
-  <!-- Background -->
+<section class="relative overflow-hidden">
+  {/* Background */}
   <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
   <div class="absolute inset-0 bg-[#0f172a]/80" />
 
-  <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-    <!-- Icon -->
-    <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white" aria-hidden="true">
+  <div class="relative z-10 mx-auto flex flex-col items-center text-center cta-container">
+    {/* Icon */}
+    <div class="mb-8 inline-flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white cta-icon" aria-hidden="true">
       <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     </div>
 
-    <!-- Title -->
-    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+    {/* Title */}
+    <h2 class="font-bold mb-6 cta-title">
       {t.cta.title}
     </h2>
 
-    <!-- Description -->
-    <p class="text-xl text-[#94a3b8] mb-10 max-w-2xl mx-auto">
+    {/* Description */}
+    <p class="text-[#94a3b8] mb-10 cta-description">
       {t.cta.description}
     </p>
 
-    <!-- CTA Button -->
-    <Button href="/download" variant="gradient" size="lg" class="text-lg px-10 py-4">
+    {/* CTA Button */}
+    <Button href="/download" variant="gradient" size="lg" class="cta-button">
       {t.cta.button}
       <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
       </svg>
     </Button>
   </div>
+
+  {/* Responsive styles */}
+  <style scoped>
+    /* CTA container responsive max-width */
+    .cta-container {
+      max-width: 680px;
+      padding: 5rem 1rem;
+      gap: 1.5rem;
+    }
+
+    /* Icon responsive styles */
+    .cta-icon {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    /* Title responsive styles */
+    .cta-title {
+      font-size: 32px;
+    }
+
+    /* Description responsive styles */
+    .cta-description {
+      font-size: 20px;
+      max-width: 560px;
+    }
+
+    /* Button responsive styles */
+    .cta-button {
+      font-size: 1.125rem;
+      padding: 1rem 2.5rem;
+    }
+
+    /* Mobile (< 480px) - 1 column */
+    @media (max-width: 479px) {
+      .cta-container {
+        max-width: 100%;
+        padding: 3rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .cta-icon {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      .cta-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .cta-title {
+        font-size: 24px;
+      }
+
+      .cta-description {
+        font-size: 16px;
+      }
+
+      .cta-button {
+        font-size: 1rem;
+        padding: 0.875rem 2rem;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .cta-container {
+        max-width: 299px;
+        padding: 3.5rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .cta-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+      }
+
+      .cta-title {
+        font-size: 26px;
+      }
+
+      .cta-description {
+        font-size: 17px;
+      }
+
+      .cta-button {
+        font-size: 1rem;
+        padding: 0.875rem 2rem;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .cta-container {
+        max-width: 617px;
+        padding: 4rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .cta-icon {
+        width: 3.75rem;
+        height: 3.75rem;
+      }
+
+      .cta-title {
+        font-size: 28px;
+      }
+
+      .cta-description {
+        font-size: 18px;
+      }
+
+      .cta-button {
+        font-size: 1.0625rem;
+        padding: 0.9375rem 2.25rem;
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .cta-container {
+        max-width: 680px;
+        padding: 5rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .cta-icon {
+        width: 4rem;
+        height: 4rem;
+      }
+
+      .cta-title {
+        font-size: 32px;
+      }
+
+      .cta-description {
+        font-size: 20px;
+      }
+
+      .cta-button {
+        font-size: 1.125rem;
+        padding: 1rem 2.5rem;
+      }
+    }
+  </style>
 </section>

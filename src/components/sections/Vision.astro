@@ -1,24 +1,122 @@
 ---
 ---
 
-<section class="relative bg-black" style="height: 400px;">
-  <!-- Grid Container -->
-  <div class="relative mx-auto" style="width: 916px; height: 400px;">
-    <!-- Label - Column 1 -->
-    <p class="absolute" style="left: 0; top: 60px; color: #666666; font-family: Inter; font-size: 14px; font-weight: 600; letter-spacing: 2px;">
+<section class="relative bg-black min-h-[200px]">
+  {/* Grid Container */}
+  <div class="relative z-10 mx-auto flex flex-col px-4 py-12 gap-6 vision-container">
+    {/* Label */}
+    <p class="text-[#666666] font-semibold tracking-wider label">
       VISION
     </p>
 
-    <!-- Title - Column 1-6 -->
-    <h2 class="absolute text-white text-left" style="left: 0; width: 916px; top: 110px; font-family: Inter; font-size: 48px; font-weight: 700; line-height: 1.2;">
+    {/* Title */}
+    <h2 class="text-white text-left font-bold leading-[1.2]">
       すべての創造性を、
       <br />
       ひとつの場所に
     </h2>
 
-    <!-- Description - Column 1-6 -->
-    <p class="absolute text-left" style="left: 0; width: 916px; top: 240px; color: #bbbbbb; font-family: Inter; font-size: 16px; font-weight: normal; line-height: 1.6;">
+    {/* Description */}
+    <p class="text-left text-[#bbbbbb] leading-[1.6]">
       S-IDEは、すべてのAIエージェントを統合し、シームレスな創造体験を提供することを目指しています。ローカルファーストで、プライバシーを重視した設計により、あらゆるデバイスから安全にアクセスできます。
     </p>
   </div>
+
+  {/* Responsive styles */}
+  <style scoped>
+    /* Vision container responsive max-width */
+    .vision-container {
+      max-width: 916px;
+    }
+
+    /* Mobile (< 480px) - 1 column */
+    @media (max-width: 479px) {
+      .vision-container {
+        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      section {
+        min-height: 180px;
+      }
+      .label {
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .vision-container {
+        max-width: 299px;
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+      section {
+        min-height: 220px;
+      }
+      .label {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+      }
+      h2 {
+        font-size: 28px;
+      }
+      p {
+        font-size: 15px;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .vision-container {
+        max-width: 617px;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      section {
+        min-height: 260px;
+      }
+      .label {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+      }
+      h2 {
+        font-size: 40px;
+      }
+      p {
+        font-size: 15px;
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .vision-container {
+        max-width: 916px;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+      }
+      section {
+        min-height: 280px;
+      }
+      .label {
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+      h2 {
+        font-size: 48px;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+  </style>
 </section>

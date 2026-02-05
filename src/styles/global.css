@@ -42,7 +42,7 @@
 }
 
 /* ========================================
-   GRID SYSTEM
+   GRID SYSTEM - RESPONSIVE
    ======================================== */
 
 .container-grid {
@@ -52,8 +52,31 @@
   max-width: var(--grid-6-col);
   margin-left: auto;
   margin-right: auto;
-  padding-left: calc(50% - var(--grid-6-col) / 2);
-  padding-right: calc(50% - var(--grid-6-col) / 2);
+  padding-left: var(--grid-gap);
+  padding-right: var(--grid-gap);
+}
+
+/* 4-column breakpoint (617-916px) */
+@media (max-width: 916px) {
+  .container-grid {
+    max-width: var(--grid-4-col);
+  }
+}
+
+/* 2-column breakpoint (480-617px) */
+@media (max-width: 617px) {
+  .container-grid {
+    max-width: var(--grid-2-col);
+  }
+}
+
+/* 1-column breakpoint (<=479px) - full width with padding */
+@media (max-width: 479px) {
+  .container-grid {
+    max-width: 100%;
+    padding-left: calc(var(--grid-gap) * 2);
+    padding-right: calc(var(--grid-gap) * 2);
+  }
 }
 
 .grid-2-col {
@@ -444,13 +467,15 @@ button:focus-visible {
 }
 
 /* ========================================
-   GRID GUIDE
+   GRID GUIDE - RESPONSIVE
    ======================================== */
+
+/* Base grid guide (6-column: 916px+) */
 body::before {
   content: "";
   position: fixed;
   top: 0;
-  left: calc(50% - var(--grid-6-col) / 2);
+  left: calc(50% - var(--grid-6-col) / 2 + var(--grid-gap));
   width: var(--grid-6-col);
   height: 100vh;
   pointer-events: none;
@@ -495,6 +520,71 @@ body::before {
     1px 100%,
     1px 100%,
     1px 100%;
+}
+
+/* 4-column grid guide (617-916px) */
+@media (max-width: 916px) {
+  body::before {
+    left: calc(50% - var(--grid-4-col) / 2 + var(--grid-gap));
+    width: var(--grid-4-col);
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0);
+    background-position:
+      0 0,
+      145px 0,
+      154px 0,
+      299px 0,
+      308px 0,
+      453px 0,
+      462px 0,
+      615px 0;
+    background-size:
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%;
+  }
+}
+
+/* 2-column grid guide (480-617px) */
+@media (max-width: 617px) {
+  body::before {
+    left: calc(50% - var(--grid-2-col) / 2 + var(--grid-gap));
+    width: var(--grid-2-col);
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0),
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 0);
+    background-position:
+      0 0,
+      145px 0,
+      154px 0,
+      298px 0;
+    background-size:
+      1px 100%,
+      1px 100%,
+      1px 100%,
+      1px 100%;
+  }
+}
+
+/* 1-column - hide grid guide (<=479px) */
+@media (max-width: 479px) {
+  body::before {
+    display: none;
+  }
 }
 /* ========================================
    FEATURES PAGE STYLES

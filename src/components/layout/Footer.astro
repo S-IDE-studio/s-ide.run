@@ -3,47 +3,53 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="w-full border-t border-white/10 bg-black">
-  <div class="mx-auto relative footer-container">
-    <!-- Brand - Column 1-2 -->
-    <div class="absolute footer-brand">
-      <div class="flex items-center gap-2">
-        <img src="/s-ide-icon.svg" alt="S-IDE" class="h-6 w-6" loading="lazy" />
-        <span class="footer-brand-text">S-IDE</span>
+  <div class="mx-auto footer-container">
+    <!-- Grid Layout for Main Content -->
+    <div class="footer-grid">
+      <!-- Brand - Column 1-2 -->
+      <div class="footer-brand">
+        <div class="flex items-center gap-2">
+          <img src="/s-ide-icon.svg" alt="S-IDE" class="h-6 w-6" loading="lazy" />
+          <span class="footer-brand-text">S-IDE</span>
+        </div>
+        <p class="footer-description">
+          Next-Gen IDE for AI Agents
+        </p>
       </div>
-      <p class="footer-description">
-        Next-Gen IDE for AI Agents
-      </p>
+
+      <!-- Spacer for column 3 -->
+      <div class="footer-spacer"></div>
+
+      <!-- Product - Column 4 -->
+      <nav class="footer-nav" aria-label="フッタープロダクトリンク">
+        <h3 class="footer-nav-title">Product</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/features" class="footer-nav-link hover:text-white transition-colors">Features</a></li>
+          <li><a href="/download" class="footer-nav-link hover:text-white transition-colors">Download</a></li>
+          <li><a href="/features" class="footer-nav-link hover:text-white transition-colors">Releases</a></li>
+        </ul>
+      </nav>
+
+      <!-- Resources - Column 5 -->
+      <nav class="footer-nav" aria-label="フッターリソースリンク">
+        <h3 class="footer-nav-title">Resources</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/docs" class="footer-nav-link hover:text-white transition-colors">Documentation</a></li>
+          <li><a href="https://github.com/S-IDE-studio/S-IDE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <!-- Legal - Column 6 -->
+      <nav class="footer-nav" aria-label="フーターリーガルリンク">
+        <h3 class="footer-nav-title">Legal</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="https://github.com/S-IDE-studio/S-IDE/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">License</a></li>
+        </ul>
+      </nav>
     </div>
 
-    <!-- Product - Column 4 -->
-    <nav class="absolute footer-nav" style="left: 462px; width: 145px;" aria-label="フッタープロダクトリンク">
-      <h3 class="footer-nav-title">Product</h3>
-      <ul class="footer-nav-list" role="list">
-        <li><a href="/features" class="footer-nav-link hover:text-white transition-colors">Features</a></li>
-        <li><a href="/download" class="footer-nav-link hover:text-white transition-colors">Download</a></li>
-        <li><a href="/features" class="footer-nav-link hover:text-white transition-colors">Releases</a></li>
-      </ul>
-    </nav>
-
-    <!-- Resources - Column 5 -->
-    <nav class="absolute footer-nav" style="left: 616px; width: 145px;" aria-label="フッターリソースリンク">
-      <h3 class="footer-nav-title">Resources</h3>
-      <ul class="footer-nav-list" role="list">
-        <li><a href="/docs" class="footer-nav-link hover:text-white transition-colors">Documentation</a></li>
-        <li><a href="https://github.com/S-IDE-studio/S-IDE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">GitHub</a></li>
-      </ul>
-    </nav>
-
-    <!-- Legal - Column 6 -->
-    <nav class="absolute footer-nav" style="left: 770px; width: 145px;" aria-label="フーターリーガルリンク">
-      <h3 class="footer-nav-title">Legal</h3>
-      <ul class="footer-nav-list" role="list">
-        <li><a href="https://github.com/S-IDE-studio/S-IDE/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-nav-link hover:text-white transition-colors">License</a></li>
-      </ul>
-    </nav>
-
     <!-- Bottom -->
-    <div class="absolute footer-bottom">
+    <div class="footer-bottom">
       <div class="footer-bottom-content">
         <p class="footer-copyright">
           &copy; {currentYear} S-IDE. All rights reserved.
@@ -52,3 +58,143 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style scoped>
+  /* Base container */
+  .footer-container {
+    max-width: 916px;
+    padding: 48px 9px 24px;
+  }
+
+  /* Grid layout for main content */
+  .footer-grid {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 32px;
+  }
+
+  /* Brand section */
+  .footer-brand {
+    width: calc(145px * 2 + 9px);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Spacer for column 3 */
+  .footer-spacer {
+    width: 145px;
+    flex-shrink: 0;
+  }
+
+  /* Navigation sections */
+  .footer-nav {
+    width: 145px;
+    flex-shrink: 0;
+  }
+
+  /* Typography */
+  .footer-brand-text {
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 16px;
+  }
+
+  .footer-description {
+    font-size: 14px;
+    color: #bbbbbb;
+  }
+
+  .footer-nav-title {
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .footer-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-nav-link {
+    font-size: 14px;
+    color: #bbbbbb;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Bottom section */
+  .footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-copyright {
+    font-size: 14px;
+    color: #bbbbbb;
+  }
+
+  /* Mobile (< 480px) */
+  @media (max-width: 479px) {
+    .footer-container {
+      max-width: 100%;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+    .footer-grid {
+      flex-direction: column;
+      gap: 24px;
+    }
+    .footer-brand,
+    .footer-spacer,
+    .footer-nav {
+      width: 100%;
+    }
+    .footer-spacer {
+      display: none;
+    }
+  }
+
+  /* Small (480-616px) - 2 columns */
+  @media (min-width: 480px) and (max-width: 616px) {
+    .footer-container {
+      max-width: 299px;
+    }
+    .footer-grid {
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      width: 100%;
+    }
+    .footer-spacer {
+      display: none;
+    }
+    .footer-nav {
+      width: calc(50% - 5px);
+    }
+  }
+
+  /* Medium (617-915px) - 4 columns */
+  @media (min-width: 617px) and (max-width: 915px) {
+    .footer-container {
+      max-width: 617px;
+    }
+    .footer-brand {
+      width: calc(145px * 2 + 9px);
+    }
+    .footer-spacer {
+      display: none;
+    }
+  }
+
+  /* Large (916px+) - 6 columns */
+  @media (min-width: 916px) {
+    .footer-container {
+      max-width: 916px;
+    }
+  }
+</style>

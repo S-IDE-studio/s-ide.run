@@ -47,23 +47,23 @@ const features: Feature[] = [
     description: 'Windows、macOS、Linuxに対応。デスクトップアプリとWeb版のどちらでも利用可能。',
     icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>',
   },
-];
 ---
 
-<section class="py-20 sm:py-32 bg-[#0f172a]">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-16">
-      <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+<section class="relative bg-[#0f172a]">
+  {/* Grid Container */}
+  <div class="relative z-10 mx-auto flex flex-col features-container">
+    {/* Section Header */}
+    <div class="text-center features-header">
+      <h2 class="font-bold mb-4 features-title">
         {t.features.title}
       </h2>
-      <p class="text-[#94a3b8] text-lg max-w-2xl mx-auto">
+      <p class="text-[#94a3b8] features-subtitle">
         {t.features.subtitle}
       </p>
     </div>
 
-    <!-- Features Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {/* Features Grid */}
+    <div class="grid gap-6 features-grid">
       {features.map((feature) => (
         <Card
           title={feature.title}
@@ -74,4 +74,123 @@ const features: Feature[] = [
       ))}
     </div>
   </div>
+
+  {/* Responsive styles */}
+  <style scoped>
+    /* Features container responsive max-width */
+    .features-container {
+      max-width: 916px;
+      padding: 5rem 1rem;
+      gap: 4rem;
+    }
+
+    /* Header responsive styles */
+    .features-header {
+      margin-bottom: 0;
+    }
+
+    .features-title {
+      font-size: 32px;
+    }
+
+    .features-subtitle {
+      font-size: 18px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Mobile (< 480px) - 1 column */
+    @media (max-width: 479px) {
+      .features-container {
+        max-width: 100%;
+        padding: 3rem 1rem;
+        gap: 3rem;
+      }
+
+      .features-title {
+        font-size: 24px;
+      }
+
+      .features-subtitle {
+        font-size: 16px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .features-container {
+        max-width: 299px;
+        padding: 3.5rem 0;
+        gap: 3.5rem;
+      }
+
+      .features-title {
+        font-size: 26px;
+      }
+
+      .features-subtitle {
+        font-size: 16px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .features-container {
+        max-width: 617px;
+        padding: 4rem 1rem;
+        gap: 3.5rem;
+      }
+
+      .features-title {
+        font-size: 28px;
+      }
+
+      .features-subtitle {
+        font-size: 17px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    /* Large (916px+) - 6 columns (3 cards per row, 2 rows) */
+    @media (min-width: 916px) {
+      .features-container {
+        max-width: 916px;
+        padding: 5rem 1rem;
+        gap: 4rem;
+      }
+
+      .features-title {
+        font-size: 32px;
+      }
+
+      .features-subtitle {
+        font-size: 18px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+  </style>
 </section>

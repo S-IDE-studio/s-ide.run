@@ -4,39 +4,40 @@ import { getTranslations } from '../../i18n/ui';
 const t = getTranslations(Astro.currentLocale);
 ---
 
-<section class="relative overflow-hidden" style="height: 370px;">
+<section class="relative overflow-hidden min-h-[370px]">
   {/* Grid Container */}
-  <div class="relative z-10 mx-auto" style="width: 916px; height: 370px;">
-    {/* Badge - Column 1 */}
-    <div class="absolute inline-flex items-center bg-white rounded-full" style="left: 0; top: 40px; gap: 8px; padding: 8px 16px; border-radius: var(--radius-pill);" aria-hidden="true">
-      <div class="rounded-full" style="width: 8px; height: 8px; background-color: #000000;"></div>
-      <span style="color: #000000; font-family: Inter; font-size: 12px; font-weight: 600;">
+  <div class="relative z-10 mx-auto flex flex-col px-4 py-10 gap-6 hero-container">
+    {/* Badge */}
+    <div class="inline-flex items-center self-start bg-white rounded-full px-4 py-2 gap-2" aria-hidden="true">
+      <div class="rounded-full w-2 h-2 bg-black"></div>
+      <span class="text-black text-xs font-semibold leading-tight">
         v1.0.0 現在公開中
       </span>
     </div>
 
-    {/* Title - Column 1-6 */}
-    <h1 class="absolute text-white text-left" style="left: 0; width: 916px; top: 90px; font-family: Inter; font-size: 64px; font-weight: 700; line-height: 1.1;">
+    {/* Title */}
+    <h1 class="text-white text-left font-bold leading-[1.1]">
       {t.hero.title}
       <br />
-      {t.hero.gradient}
+      <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        {t.hero.gradient}
+      </span>
     </h1>
 
-    {/* Subtitle - Column 1-6 */}
-    <p class="absolute text-left" style="left: 0; width: 916px; top: 240px; color: #bbbbbb; font-family: Inter; font-size: 18px; font-weight: normal; line-height: 1.5;">
+    {/* Subtitle */}
+    <p class="text-left text-[#bbbbbb] leading-[1.5]">
       {t.hero.subtitle}
     </p>
 
-    {/* CTA Buttons - Column 1-6 */}
-    <div class="absolute flex items-center" style="left: 0; width: 916px; top: 300px; gap: 9px;">
+    {/* CTA Buttons */}
+    <div class="flex items-center gap-2 cta-buttons">
       {/* Download Button */}
       <a
         href="/download"
-        class="flex items-center justify-center rounded-full"
-        style="width: 299px; height: 44px; background-color: #ffffff;"
+        class="flex items-center justify-center rounded-full bg-white h-11 min-w-[299px]"
         aria-label="ダウンロードページへ移動"
       >
-        <span style="color: #000000; font-family: Inter; font-size: 14px; font-weight: 600;">
+        <span class="text-black text-sm font-semibold">
           {t.hero.cta}
         </span>
       </a>
@@ -44,14 +45,94 @@ const t = getTranslations(Astro.currentLocale);
       {/* Docs Button */}
       <a
         href="/docs"
-        class="flex items-center justify-center rounded-full"
-        style="width: 299px; height: 44px; background-color: #333333;"
+        class="flex items-center justify-center rounded-full bg-[#333333] h-11 min-w-[299px]"
         aria-label="ドキュメントページへ移動"
       >
-        <span style="color: #ffffff; font-family: Inter; font-size: 14px; font-weight: 600;">
+        <span class="text-white text-sm font-semibold">
           {t.nav.docs}
         </span>
       </a>
     </div>
   </div>
+
+  {/* Responsive styles */}
+  <style scoped>
+    /* Hero container responsive max-width */
+    .hero-container {
+      max-width: 916px;
+    }
+
+    /* CTA buttons responsive layout */
+    .cta-buttons {
+      flex-direction: row;
+    }
+
+    /* Mobile (< 480px) */
+    @media (max-width: 479px) {
+      .hero-container {
+        max-width: 100%;
+      }
+      .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      section {
+        min-height: 320px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .hero-container {
+        max-width: 299px;
+      }
+      section {
+        min-height: 340px;
+      }
+      h1 {
+        font-size: 40px;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .hero-container {
+        max-width: 617px;
+      }
+      section {
+        min-height: 360px;
+      }
+      h1 {
+        font-size: 52px;
+      }
+      p {
+        font-size: 17px;
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .hero-container {
+        max-width: 916px;
+      }
+      section {
+        min-height: 370px;
+      }
+      h1 {
+        font-size: 64px;
+      }
+      p {
+        font-size: 18px;
+      }
+    }
+  </style>
 </section>

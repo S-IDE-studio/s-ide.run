@@ -7,17 +7,20 @@ const navItems = [
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-white/10 bg-black">
-  <nav class="relative mx-auto h-20 max-w-[916px]" aria-label="メインナビゲーション">
-    <!-- Logo - Column 1 center -->
-    <a href="/" class="absolute top-0 bottom-0 flex items-center justify-center gap-2 z-10" style="left: 0; width: 145px;" aria-label="S-IDE ホーム">
+  <nav class="mx-auto flex items-center h-20 header-container" aria-label="メインナビゲーション">
+    <!-- Logo -->
+    <a href="/" class="flex items-center justify-center gap-2 logo-column" aria-label="S-IDE ホーム">
       <img src="/s-ide-icon.svg" alt="S-IDE" class="w-[30px] h-[30px]" loading="lazy" />
       <span class="text-xl font-bold text-white">S-IDE</span>
     </a>
 
-    <!-- Navigation - Columns 4, 5, 6 -->
-    <ul class="absolute inset-0" role="list">
-      {navItems.map((item, index) => (
-        <li class="absolute top-0 bottom-0 flex items-center justify-center" style={`left: calc(145px * ${index + 3} + 9px * ${index + 3}); width: 145px;`}>
+    <!-- Spacer for columns 2-3 -->
+    <div class="nav-spacer"></div>
+
+    <!-- Navigation -->
+    <ul class="flex items-center gap-[9px]" role="list">
+      {navItems.map((item) => (
+        <li class="flex items-center justify-center nav-item">
           <a
             href={item.href}
             class:list={[
@@ -33,3 +36,84 @@ const navItems = [
     </ul>
   </nav>
 </header>
+
+<style scoped>
+  /* Base container */
+  .header-container {
+    max-width: 916px;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  /* Logo column width */
+  .logo-column {
+    width: 145px;
+    flex-shrink: 0;
+  }
+
+  /* Spacer for columns 2-3 */
+  .nav-spacer {
+    width: calc(145px * 2 + 9px * 2);
+    flex-shrink: 0;
+  }
+
+  /* Navigation item width */
+  .nav-item {
+    width: 145px;
+    flex-shrink: 0;
+  }
+
+  /* Mobile (< 480px) */
+  @media (max-width: 479px) {
+    .header-container {
+      max-width: 100%;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+    .logo-column {
+      width: 100%;
+    }
+    .nav-spacer {
+      display: none;
+    }
+    .nav-item {
+      width: 100%;
+    }
+    nav {
+      flex-direction: column;
+      gap: 16px;
+      height: auto;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    ul {
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+  }
+
+  /* Small (480-616px) - 2 columns */
+  @media (min-width: 480px) and (max-width: 616px) {
+    .header-container {
+      max-width: 299px;
+    }
+  }
+
+  /* Medium (617-915px) - 4 columns */
+  @media (min-width: 617px) and (max-width: 915px) {
+    .header-container {
+      max-width: 617px;
+    }
+    .nav-spacer {
+      width: calc(145px * 2 + 9px * 2);
+    }
+  }
+
+  /* Large (916px+) - 6 columns */
+  @media (min-width: 916px) {
+    .header-container {
+      max-width: 916px;
+    }
+  }
+</style>

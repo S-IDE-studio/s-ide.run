@@ -1,57 +1,357 @@
 ---
 ---
 
-<section class="relative bg-black" style="height: 1280px;">
-  <!-- Grid Container -->
-  <div class="relative mx-auto" style="width: 916px; height: 1280px;">
-    <!-- Label - Column 1 -->
-    <p class="absolute" style="left: 0; top: 60px; color: #666666; font-family: Inter; font-size: 14px; font-weight: 600; letter-spacing: 2px;">
+<section class="relative bg-black">
+  {/* Grid Container */}
+  <div class="relative z-10 mx-auto flex flex-col screenshots-container">
+    {/* Label */}
+    <p class="text-[#666666] font-semibold tracking-wider label">
       SCREENSHOTS
     </p>
 
-    <!-- Pattern 1: Text Left + Image Right -->
-    <article class="absolute flex items-center" style="left: 0; top: 120px; width: 916px; height: 320px; gap: 9px;">
-      <!-- Text - Column 1-3 -->
-      <div style="width: 453px;">
-        <h2 class="mb-4" style="color: #ffffff; font-family: Inter; font-size: 24px; font-weight: 700;">エージェント管理</h2>
-        <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal; line-height: 1.5;">
+    {/* Pattern 1: Text Left + Image Right */}
+    <article class="flex items-center gap-2 screenshot-row">
+      {/* Text */}
+      <div class="screenshot-text">
+        <h2 class="text-white font-bold mb-4">エージェント管理</h2>
+        <p class="text-[#bbbbbb] leading-[1.5]">
           複数のAIエージェントを統合して一元管理
         </p>
       </div>
-      <!-- Image - Column 4-6 -->
-      <div class="flex items-center justify-center" style="width: 453px; height: 320px; background-color: #1a1a1a; border: 1px solid #333333;" role="img" aria-label="エージェント管理画面のスクリーンショット">
-        <span style="color: #666666; font-family: Inter; font-size: 12px; font-weight: 600;">Screenshot</span>
+      {/* Image */}
+      <div class="flex items-center justify-center screenshot-placeholder" role="img" aria-label="エージェント管理画面のスクリーンショット">
+        <span class="text-[#666666] text-xs font-semibold">Screenshot</span>
       </div>
     </article>
 
-    <!-- Pattern 2: Image Left + Text Right -->
-    <article class="absolute flex items-center" style="left: 0; top: 460px; width: 916px; height: 320px; gap: 9px;">
-      <!-- Image - Column 1-3 -->
-      <div class="flex items-center justify-center" style="width: 453px; height: 320px; background-color: #1a1a1a; border: 1px solid #333333;" role="img" aria-label="ローカル実行画面のスクリーンショット">
-        <span style="color: #666666; font-family: Inter; font-size: 12px; font-weight: 600;">Screenshot</span>
+    {/* Pattern 2: Image Left + Text Right */}
+    <article class="flex items-center gap-2 screenshot-row">
+      {/* Image */}
+      <div class="flex items-center justify-center screenshot-placeholder" role="img" aria-label="ローカル実行画面のスクリーンショット">
+        <span class="text-[#666666] text-xs font-semibold">Screenshot</span>
       </div>
-      <!-- Text - Column 4-6 -->
-      <div style="width: 453px;">
-        <h2 class="mb-4" style="color: #ffffff; font-family: Inter; font-size: 24px; font-weight: 700;">ローカル実行</h2>
-        <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal; line-height: 1.5;">
+      {/* Text */}
+      <div class="screenshot-text">
+        <h2 class="text-white font-bold mb-4">ローカル実行</h2>
+        <p class="text-[#bbbbbb] leading-[1.5]">
           データをローカル環境で安全に処理
         </p>
       </div>
     </article>
 
-    <!-- Pattern 3: Full Width Image + Text Below -->
-    <article class="absolute flex flex-col" style="left: 0; top: 800px; width: 916px; gap: 16px;">
-      <!-- Image - Column 1-6 -->
-      <div class="flex items-center justify-center" style="width: 916px; height: 400px; background-color: #1a1a1a; border: 1px solid #333333;" role="img" aria-label="マルチデバイス対応画面のスクリーンショット">
-        <span style="color: #666666; font-family: Inter; font-size: 12px; font-weight: 600;">Screenshot</span>
+    {/* Pattern 3: Full Width Image + Text Below */}
+    <article class="flex flex-col gap-4 screenshot-full">
+      {/* Image */}
+      <div class="flex items-center justify-center screenshot-placeholder-full" role="img" aria-label="マルチデバイス対応画面のスクリーンショット">
+        <span class="text-[#666666] text-xs font-semibold">Screenshot</span>
       </div>
-      <!-- Text - Column 1-6 -->
-      <div class="text-center" style="width: 916px;">
-        <h2 class="mb-3" style="color: #ffffff; font-family: Inter; font-size: 24px; font-weight: 700;">マルチデバイス対応</h2>
-        <p style="color: #bbbbbb; font-family: Inter; font-size: 14px; font-weight: normal; line-height: 1.5;">
+      {/* Text */}
+      <div class="text-center screenshot-text-full">
+        <h2 class="text-white font-bold mb-3">マルチデバイス対応</h2>
+        <p class="text-[#bbbbbb] leading-[1.5]">
           あらゆるデバイスからブラウザでアクセス可能
         </p>
       </div>
     </article>
   </div>
+
+  {/* Responsive styles */}
+  <style scoped>
+    /* Screenshots container responsive max-width */
+    .screenshots-container {
+      max-width: 916px;
+      padding: 3.75rem 1rem;
+      gap: 1.5rem;
+    }
+
+    /* Label responsive styles */
+    .label {
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* Screenshot row (2-column layout) */
+    .screenshot-row {
+      gap: 9px;
+      min-height: 320px;
+    }
+
+    .screenshot-text {
+      width: 453px;
+    }
+
+    .screenshot-text h2 {
+      font-size: 24px;
+    }
+
+    .screenshot-text p {
+      font-size: 14px;
+    }
+
+    .screenshot-placeholder {
+      width: 453px;
+      height: 320px;
+      background-color: #1a1a1a;
+      border: 1px solid #333333;
+    }
+
+    /* Full width screenshot */
+    .screenshot-full {
+      gap: 16px;
+    }
+
+    .screenshot-placeholder-full {
+      width: 916px;
+      height: 400px;
+      background-color: #1a1a1a;
+      border: 1px solid #333333;
+    }
+
+    .screenshot-text-full {
+      width: 916px;
+    }
+
+    .screenshot-text-full h2 {
+      font-size: 24px;
+    }
+
+    .screenshot-text-full p {
+      font-size: 14px;
+    }
+
+    /* Mobile (< 480px) - 1 column, 2-column rows become 1-column */
+    @media (max-width: 479px) {
+      .screenshots-container {
+        max-width: 100%;
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .label {
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+
+      /* Change 2-column layout to 1-column */
+      .screenshot-row {
+        flex-direction: column;
+        min-height: auto;
+        gap: 1rem;
+      }
+
+      .screenshot-text {
+        width: 100%;
+      }
+
+      .screenshot-text h2 {
+        font-size: 20px;
+      }
+
+      .screenshot-text p {
+        font-size: 13px;
+      }
+
+      .screenshot-placeholder {
+        width: 100%;
+        height: 200px;
+      }
+
+      /* Full width screenshot adjustments */
+      .screenshot-full {
+        gap: 1rem;
+      }
+
+      .screenshot-placeholder-full {
+        width: 100%;
+        height: 200px;
+      }
+
+      .screenshot-text-full {
+        width: 100%;
+      }
+
+      .screenshot-text-full h2 {
+        font-size: 20px;
+      }
+
+      .screenshot-text-full p {
+        font-size: 13px;
+      }
+    }
+
+    /* Small (480-616px) - 2 columns */
+    @media (min-width: 480px) and (max-width: 616px) {
+      .screenshots-container {
+        max-width: 299px;
+        padding: 2.5rem 0;
+        gap: 1.25rem;
+      }
+
+      .label {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+      }
+
+      /* Scale down for 2-column layout */
+      .screenshot-row {
+        min-height: 280px;
+        gap: 7px;
+      }
+
+      .screenshot-text {
+        width: 146px;
+      }
+
+      .screenshot-text h2 {
+        font-size: 18px;
+      }
+
+      .screenshot-text p {
+        font-size: 12px;
+      }
+
+      .screenshot-placeholder {
+        width: 146px;
+        height: 280px;
+      }
+
+      /* Full width - still full width of 2-column container */
+      .screenshot-full {
+        gap: 12px;
+      }
+
+      .screenshot-placeholder-full {
+        width: 299px;
+        height: 250px;
+      }
+
+      .screenshot-text-full {
+        width: 299px;
+      }
+
+      .screenshot-text-full h2 {
+        font-size: 18px;
+      }
+
+      .screenshot-text-full p {
+        font-size: 12px;
+      }
+    }
+
+    /* Medium (617-915px) - 4 columns */
+    @media (min-width: 617px) and (max-width: 915px) {
+      .screenshots-container {
+        max-width: 617px;
+        padding: 3rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .label {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+      }
+
+      .screenshot-row {
+        min-height: 300px;
+        gap: 8px;
+      }
+
+      .screenshot-text {
+        width: 304px;
+      }
+
+      .screenshot-text h2 {
+        font-size: 22px;
+      }
+
+      .screenshot-text p {
+        font-size: 13px;
+      }
+
+      .screenshot-placeholder {
+        width: 304px;
+        height: 300px;
+      }
+
+      /* Full width adjustments */
+      .screenshot-full {
+        gap: 14px;
+      }
+
+      .screenshot-placeholder-full {
+        width: 617px;
+        height: 320px;
+      }
+
+      .screenshot-text-full {
+        width: 617px;
+      }
+
+      .screenshot-text-full h2 {
+        font-size: 22px;
+      }
+
+      .screenshot-text-full p {
+        font-size: 13px;
+      }
+    }
+
+    /* Large (916px+) - 6 columns */
+    @media (min-width: 916px) {
+      .screenshots-container {
+        max-width: 916px;
+        padding: 3.75rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .label {
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+
+      .screenshot-row {
+        min-height: 320px;
+        gap: 9px;
+      }
+
+      .screenshot-text {
+        width: 453px;
+      }
+
+      .screenshot-text h2 {
+        font-size: 24px;
+      }
+
+      .screenshot-text p {
+        font-size: 14px;
+      }
+
+      .screenshot-placeholder {
+        width: 453px;
+        height: 320px;
+      }
+
+      /* Full width at 6 columns */
+      .screenshot-full {
+        gap: 16px;
+      }
+
+      .screenshot-placeholder-full {
+        width: 916px;
+        height: 400px;
+      }
+
+      .screenshot-text-full {
+        width: 916px;
+      }
+
+      .screenshot-text-full h2 {
+        font-size: 24px;
+      }
+
+      .screenshot-text-full p {
+        font-size: 14px;
+      }
+    }
+  </style>
 </section>
