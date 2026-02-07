@@ -36,6 +36,7 @@ const containerClass = isComingSoon
   ? 'flex flex-col platform-card platform-card-coming-soon'
   : 'flex flex-col platform-card';
 const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
+const ariaLabel = external ? `${name}を開く` : `${name}をダウンロード`;
 ---
 
 <article class={containerClass}>
@@ -64,7 +65,7 @@ const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
             href={downloadUrl}
             class="platform-card-button"
             class:opacity-50={!isAvailable}
-            aria-label={`${name}をダウンロード`}
+            aria-label={ariaLabel}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener noreferrer" : undefined}
             download={external ? undefined : name}

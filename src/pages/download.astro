@@ -88,13 +88,12 @@ try {
 }
 
 // Helper to get download URL with fallback to GitHub releases
-// Uses proxy API for direct downloads, avoiding GitHub release page redirects
 const getDownloadUrl = (asset: PlatformAsset | null): string => {
   if (!asset?.url) {
     return 'https://github.com/S-IDE-studio/S-IDE/releases';
   }
-  // Use proxy API for direct download
-  return `/api/download/${encodeURIComponent(asset.name)}?url=${encodeURIComponent(asset.url)}`;
+  // Use GitHub direct asset URL (it may redirect to the actual storage URL; browsers handle this well).
+  return asset.url;
 };
 
 // Check if asset is available

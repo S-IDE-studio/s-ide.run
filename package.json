@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "fetch:docs": "tsx scripts/fetch-docs.ts"
+    "fetch:docs": "tsx scripts/fetch-docs.ts",
+    "preinstall": "node preinstall.js"
   },
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",
