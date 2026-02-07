@@ -140,23 +140,19 @@ export interface ReleaseAssets {
  * Extract platform-specific assets from a release
  */
 export function getAssetsByOS(release: Release): ReleaseAssets {
+  const byName = (name: string) => release.assets.find((a) => a.name === name) ?? null;
+  const byExt = (ext: string) => release.assets.find((a) => a.name.endsWith(ext)) ?? null;
+
   return {
-    windows:
-      release.assets.find(
-        (a) => a.name.endsWith('.exe') || a.name.toLowerCase().includes('windows')
-      ) || null,
-    macos:
-      release.assets.find(
-        (a) => a.name.endsWith('.dmg') || a.name.toLowerCase().includes('macos')
-      ) || null,
+    // Prefer stable "latest download" asset names (added by CI), then fall back to any matching assets.
+    windows: byName('s-ide-windows-setup.exe') ?? byExt('.exe'),
+    macos: byName('s-ide-macos-arm64.dmg') ?? byExt('.dmg'),
     linux:
-      release.assets.find(
-        (a) =>
-          a.name.endsWith('.AppImage') ||
-          a.name.endsWith('.deb') ||
-          a.name.endsWith('.rpm') ||
-          a.name.toLowerCase().includes('linux')
-      ) || null,
+      byName('s-ide-linux.AppImage') ??
+      byExt('.AppImage') ??
+      byName('s-ide-linux.deb') ??
+      byExt('.deb') ??
+      byExt('.rpm'),
   };
 }
 
