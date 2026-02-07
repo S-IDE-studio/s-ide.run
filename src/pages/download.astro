@@ -1,6 +1,7 @@
 ---
 import PlatformCard from '../components/ui/PlatformCard.astro';
 import Layout from '../layouts/Layout.astro';
+import { DISTRIBUTION } from '../config/distribution';
 import {
   formatFileSize,
   GitHubApiError,
@@ -19,6 +20,16 @@ interface ReleaseData {
   windows: PlatformAsset | null;
   macos: PlatformAsset | null;
   linux: PlatformAsset | null;
+  mobile: {
+    ios: {
+      url: string;
+      label: string;
+    };
+    android: {
+      url: string;
+      label: string;
+    };
+  };
   error: boolean;
 }
 
@@ -26,6 +37,16 @@ const releaseData: ReleaseData = {
   windows: null,
   macos: null,
   linux: null,
+  mobile: {
+    ios: {
+      url: DISTRIBUTION.ios.testflightUrl,
+      label: 'TestFlight',
+    },
+    android: {
+      url: DISTRIBUTION.android.playStoreUrl,
+      label: 'Play Store',
+    },
+  },
   error: false,
 };
 
@@ -67,8 +88,13 @@ try {
 }
 
 // Helper to get download URL with fallback to GitHub releases
+// Uses proxy API for direct downloads, avoiding GitHub release page redirects
 const getDownloadUrl = (asset: PlatformAsset | null): string => {
-  return asset?.url || 'https://github.com/S-IDE-studio/S-IDE/releases';
+  if (!asset?.url) {
+    return 'https://github.com/S-IDE-studio/S-IDE/releases';
+  }
+  // Use proxy API for direct download
+  return `/api/download/${encodeURIComponent(asset.name)}?url=${encodeURIComponent(asset.url)}`;
 };
 
 // Check if asset is available
@@ -132,10 +158,11 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
         <PlatformCard
           name="iOS"
           shortName="iOS"
-          description="iOS"
-          downloadUrl="#"
-          isComingSoon={true}
-          icon="📱"
+          description="Join via TestFlight"
+          downloadUrl={releaseData.mobile.ios.url}
+          buttonLabel={releaseData.mobile.ios.label}
+          isAvailable={true}
+          external={true}
         />
       </div>
 
@@ -144,10 +171,11 @@ const isAvailable = (asset: PlatformAsset | null): boolean => {
         <PlatformCard
           name="Android"
           shortName="Android"
-          description="Android"
-          downloadUrl="#"
-          isComingSoon={true}
-          icon="🤖"
+          description="Get it on Google Play"
+          downloadUrl={releaseData.mobile.android.url}
+          buttonLabel={releaseData.mobile.android.label}
+          isAvailable={true}
+          external={true}
         />
       </div>
 

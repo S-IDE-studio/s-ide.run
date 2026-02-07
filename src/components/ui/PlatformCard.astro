@@ -13,6 +13,7 @@ interface Props {
   isAvailable?: boolean;
   isComingSoon?: boolean;
   icon?: string;
+  external?: boolean;
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   isAvailable = true,
   isComingSoon = false,
   icon,
+  external = false,
 } = Astro.props;
 
 const computedShortName = shortName ?? name;
@@ -63,6 +65,9 @@ const innerDivStyle = isComingSoon ? 'gap: 16px; height: 100%;' : 'gap: 16px;';
             class="platform-card-button"
             class:opacity-50={!isAvailable}
             aria-label={`${name}をダウンロード`}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            download={external ? undefined : name}
           >
             <span class="platform-card-button-text">
               {buttonLabel} {sizeDisplay}
